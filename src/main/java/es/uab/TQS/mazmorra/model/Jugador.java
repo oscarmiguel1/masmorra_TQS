@@ -3,6 +3,11 @@ package es.uab.TQS.mazmorra.model;
 
 public class Jugador {
 
+    private int pos_x;
+    private int pos_y;
+
+    private int lim_x;
+    private int lim_y;
     private int hp_actual;
     private int max_hp;
 
@@ -13,6 +18,10 @@ public class Jugador {
     //private ArrayList inventari; esto sera un array de Items
 
     public Jugador(){
+        this.pos_x = 0;
+        this.pos_y = 0;
+        this.lim_x = 30;
+        this.lim_y = 30;
         this.max_hp = 20;
         this.hp_actual = this.max_hp;
         this.exp = 0;
@@ -23,9 +32,38 @@ public class Jugador {
     public int getLvl(){
         return this.lv;
     }
-    
+
+    public int getPos_x() {return this.pos_x;}
+
+    public int getPos_y() {return this.pos_y;}
+
+    public void moveUp() {
+        if(this.pos_y-1 < this.lim_y){
+            this.pos_y--;
+        }
+    }
+    public void moveDown() {
+        if(this.pos_y+1 > this.lim_y){
+            this.pos_y++;
+        }
+    }
+    public void moveRight(){
+        if(this.pos_x+1 < this.lim_x){
+            this.pos_x++;
+        }
+    }
+    public void moveleft(){
+          if(this.pos_x+1 > this.lim_x){
+            this.pos_x--;
+        }
+    }
     public int getHP(){
         return this.hp_actual;
+    }
+
+    public void setInitialPos(int x,int y) {
+        this.pos_x = x;
+        this.pos_y = y;
     }
 
     public int getEXP(){

@@ -7,6 +7,18 @@ public class JugadorTest {
     
 
     @Test
+    void testLimits(){
+      Jugador j = new Jugador();
+
+      j.setInitialPos(29,9);
+
+      j.moveDown();
+      j.moveRight();
+      assertTrue(j.getPos_y() == 9);
+      assertTrue(j.getPos_x() == 29);
+
+    }
+    @Test
     void testsetHP() {
        Jugador j = new Jugador();
 

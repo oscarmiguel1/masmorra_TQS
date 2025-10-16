@@ -1,4 +1,5 @@
 package es.uab.TQS.mazmorra;
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
@@ -7,7 +8,7 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
-public class DemoLanterna {
+public class Main {
     public static void main(String[] args) {
         try {
 
@@ -15,6 +16,7 @@ public class DemoLanterna {
                     .setForceAWTOverSwing(false)  // asegura compatibilidad
                     .setTerminalEmulatorTitle("Mazmorra")
                     .setPreferTerminalEmulator(true); // fuerza modo ventana
+
 
             Terminal terminal = terminalFactory.createTerminal();
             Screen screen = new TerminalScreen(terminal);
@@ -31,8 +33,8 @@ public class DemoLanterna {
                 tg.setForegroundColor(TextColor.ANSI.WHITE);
                 tg.putString(jugadorX, jugadorY, "@");
 
-                tg.setForegroundColor(TextColor.ANSI.YELLOW);
-                for (int x = 0; x < 30; x++) tg.putString(x, 10, "#");
+                tg.setForegroundColor(TextColor.ANSI.RED);
+                for (int x = 0; x < 50; x++) tg.putString(x, 10, "_");
 
                 screen.refresh();
 

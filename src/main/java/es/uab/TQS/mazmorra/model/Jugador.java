@@ -1,3 +1,4 @@
+//Jugador
 package es.uab.TQS.mazmorra.model;
 
 
@@ -20,8 +21,8 @@ public class Jugador {
     public Jugador(){
         this.pos_x = 0;
         this.pos_y = 0;
-        this.lim_x = 30;
-        this.lim_y = 30;
+        this.lim_x = 80;
+        this.lim_y = 20;
         this.max_hp = 20;
         this.hp_actual = this.max_hp;
         this.exp = 0;
@@ -43,7 +44,7 @@ public class Jugador {
         }
     }
     public void moveDown() {
-        if(this.pos_y+1 > this.lim_y){
+        if(this.pos_y+1 < this.lim_y){
             this.pos_y++;
         }
     }
@@ -53,7 +54,7 @@ public class Jugador {
         }
     }
     public void moveleft(){
-          if(this.pos_x+1 > this.lim_x){
+          if(this.pos_x+1 < this.lim_x){
             this.pos_x--;
         }
     }

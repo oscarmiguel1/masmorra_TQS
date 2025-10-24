@@ -2,10 +2,14 @@
 package es.uab.TQS.mazmorra.model;
 
 
+import java.util.ArrayList;
+
 public class Jugador {
 
     private int pos_x;
     private int pos_y;
+
+    private ArrayList<Item> inventari;
 
     private int lim_x;
     private int lim_y;
@@ -16,12 +20,11 @@ public class Jugador {
     private int exp_necesaria;
     private int lv;
 
-    //private ArrayList inventari; esto sera un array de Items
 
     public Jugador(){
         this.pos_x = 0;
         this.pos_y = 0;
-        this.lim_x = 80;
+        this.lim_x = 79;
         this.lim_y = 20;
         this.max_hp = 20;
         this.hp_actual = this.max_hp;
@@ -38,6 +41,8 @@ public class Jugador {
 
     public int getPos_y() {return this.pos_y;}
 
+    public Item getInventari(int n) {return this.inventari.get(n);}
+    public void addItem(Item i) {this.inventari.add(i);}
     public void moveUp() {
         if(this.pos_y-1 < this.lim_y){
             this.pos_y--;
@@ -54,7 +59,7 @@ public class Jugador {
         }
     }
     public void moveleft(){
-          if(this.pos_x+1 < this.lim_x){
+          if(this.pos_x-1 > 0){
             this.pos_x--;
         }
     }

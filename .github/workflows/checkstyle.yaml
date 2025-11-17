@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+          "-//Checkstyle//DTD Checkstyle Configuration 9.3//EN"
+          "https://checkstyle.org/dtds/configuration_9_3.dtd">
+
+<module name="Checker">
+
+    <!-- Regla de longitud de línea elevada -->
+    <module name="LineLength">
+        <property name="max" value="200"/>
+        <property name="ignorePattern" value="^package.*|^import.*"/>
+    </module>
+
+    <!-- Evitar espacios al final de la línea -->
+    <module name="TrailingWhitespace"/>
+
+    <!-- Reglas de estilo básicas -->
+    <module name="TreeWalker">
+
+        <!-- Nombrado estándar -->
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodName"/>
+
+        <!-- Sangrado básico -->
+        <module name="Indentation">
+            <property name="basicOffset" value="4"/>
+            <property name="braceAdjustment" value="0"/>
+            <property name="caseIndent" value="4"/>
+        </module>
+
+        <!-- Prohibir imports que no se usan -->
+        <module name="UnusedImports"/>
+    </module>
+
+</module>

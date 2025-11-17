@@ -47,6 +47,17 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+
+            <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-checkstyle-plugin</artifactId>
+                  <version>3.3.1</version>
+                  <configuration>
+                     <configLocation>config/checkstyle/checkstyle.xml</configLocation>
+                     <failsOnError>true</failsOnError>
+                  </configuration>
+         </plugin>
+                 
         </plugins>
     </build>
 </project>

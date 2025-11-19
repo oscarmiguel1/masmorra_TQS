@@ -25,7 +25,7 @@ public class Jugador {
         this.pos_x = 0;
         this.pos_y = 0;
         this.lim_x = 79;
-        this.lim_y = 20;
+        this.lim_y = 19;
         this.max_hp = 20;
         this.hp_actual = this.max_hp;
         this.exp = 0;
@@ -44,12 +44,12 @@ public class Jugador {
     public Item getInventari(int n) {return this.inventari.get(n);}
     public void addItem(Item i) {this.inventari.add(i);}
     public void moveUp() {
-        if(this.pos_y-1 < this.lim_y){
+        if(this.pos_y-1 > 0){
             this.pos_y--;
         }
     }
     public void moveDown() {
-        if(this.pos_y+1 < this.lim_y){
+        if(this.pos_y+1 <= this.lim_y){
             this.pos_y++;
         }
     }

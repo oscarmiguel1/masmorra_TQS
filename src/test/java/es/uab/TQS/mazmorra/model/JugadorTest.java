@@ -16,7 +16,6 @@ public class JugadorTest {
       j.moveRight();
       assertTrue(j.getPos_y() == 9);
       assertTrue(j.getPos_x() == 29);
-
     }
     @Test
     void testsetHP() {

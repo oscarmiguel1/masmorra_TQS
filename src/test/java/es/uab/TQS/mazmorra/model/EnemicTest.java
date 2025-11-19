@@ -7,7 +7,7 @@ public class EnemicTest {
 
     @Test
     void testDie(){
-        Enemic e = new Enemic();
+        Enemic e = new Enemic(10,20);
     }
 
 }

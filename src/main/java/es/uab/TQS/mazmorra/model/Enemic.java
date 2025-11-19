@@ -13,8 +13,6 @@ public class Enemic {
 
     private int atk;
 
-    private String enemyIcon = "&";
-
     private int pos_x;
     private int pos_y;
 

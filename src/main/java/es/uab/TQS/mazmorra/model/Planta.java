@@ -6,14 +6,17 @@ public class Planta {
   private boolean doorOpen;
 
 
+
   private String[] floorLayout;
 
+  private Enemic[] enemics;
   private int enemiesLeft;
 
-  public Planta(int e, String[] f){
+  public Planta(int e, String[] f, Enemic[] en){
     this.doorOpen = false;
     this.enemiesLeft = e;
     this.floorLayout = f;
+    this.enemics = en;
   }
 
   public void openDoor() {this.doorOpen = true;}

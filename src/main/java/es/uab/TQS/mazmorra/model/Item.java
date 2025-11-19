@@ -5,7 +5,7 @@ public interface Item {
   public String getNom();
   public String getDescripcio();
 
-  public void usarItem(Jugador p);
+  public void usarItem();
 
 
 }

@@ -13,7 +13,6 @@ public class Llave implements Item {
   }
 
   @Override
-  public void usarItem(Jugador j){
-    j.setInitialPos(0,0);
+  public void usarItem(){
   }
 }

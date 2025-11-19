@@ -3,6 +3,12 @@ package es.uab.TQS.mazmorra.model;
 public class Pocion implements Item{
   private int cura = 50;
 
+  private Jugador poseedor;
+
+  public Pocion(Jugador j){
+      this.poseedor = j;
+  }
+
   @Override
   public String getNom(){
     return "Pocion de vida";
@@ -14,7 +20,7 @@ public class Pocion implements Item{
   }
 
   @Override
-  public void usarItem(Jugador j){
-    j.setHP(cura);
+  public void usarItem(){
+    this.poseedor.setHP(cura);
   }
 }

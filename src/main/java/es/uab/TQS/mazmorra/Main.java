@@ -42,9 +42,12 @@ public class Main {
                 screen.clear();
 
                 if (currentState == GameState.EXPLORING) {
+                    screen.clear();            // SOLO limpiar cuando explores
                     drawDungeon(screen, tg, j);
                 } else if (currentState == GameState.INVENTORY) {
-                    drawInventory(screen, tg);
+                    // NO limpiar pantalla → el mapa permanece
+                    drawDungeon(screen, tg, j); // redibujar el mapa
+                    drawInventory(screen, tg);  // panel superpuesto
                 }
 
                 screen.refresh();
@@ -132,13 +135,26 @@ public class Main {
     }
 
     private static void drawInventory(Screen screen, TextGraphics tg) {
-        tg.setForegroundColor(TextColor.ANSI.CYAN);
-        tg.putString(30, 2, "=== INVENTARIO ===");
+        // Panel lateral
         tg.setForegroundColor(TextColor.ANSI.WHITE);
-        tg.putString(25, 5, "1. Espada oxidada");
-        tg.putString(25, 6, "2. Escudo de madera");
-        tg.putString(25, 7, "3. Poción de curación");
+        for (int y = 0; y < 15; y++) {
+            tg.putString(0, y, "│");
+            tg.putString(19, y, "│");
+        }
+        tg.putString(0, 0, "┌──────────────────┐");
+        tg.putString(0, 14, "└──────────────────┘");
+
+        tg.setForegroundColor(TextColor.ANSI.CYAN);
+        tg.putString(2, 1, " INVENTARIO ");
+
+        tg.setForegroundColor(TextColor.ANSI.WHITE);
+        tg.putString(2, 3, "1. Espada oxidada");
+        tg.putString(2, 4, "2. Escudo de madera");
+        tg.putString(2, 5, "3. Poción de curación");
+
         tg.setForegroundColor(TextColor.ANSI.YELLOW);
-        tg.putString(25, 10, "[I] Volver  |  [ESC] Salir del juego");
+        tg.putString(2, 7, "[I] Cerrar invent.");
     }
+
+
 }

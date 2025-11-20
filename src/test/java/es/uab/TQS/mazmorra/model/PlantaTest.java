@@ -24,7 +24,12 @@ public class PlantaTest {
   "+-------------------------+------------+"
   };
 
-    Planta p = new Planta(3,planta);
+      Enemic[] enemics = new Enemic[]{
+              new Enemic(10, 10),
+              new Enemic(15, 8),
+              new Enemic(12, 20)
+      };
+    Planta p = new Planta(3,planta,enemics);
 
     p.openDoor();
     assertTrue(p.getDoorState());
@@ -47,7 +52,12 @@ public class PlantaTest {
   "+-------------------------+------------+"
   };
 
-    Planta p = new Planta(3,planta);
+      Enemic[] enemics = new Enemic[]{
+              new Enemic(10, 10),
+              new Enemic(15, 8),
+              new Enemic(12, 20)
+      };
+    Planta p = new Planta(3,planta,enemics);
 
     p.enemyDefeated();
 

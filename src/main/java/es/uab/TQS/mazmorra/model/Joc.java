@@ -74,43 +74,58 @@ public class Joc {
             "################################################################################"
     };
 
-    public static String WALL = "#";
-    public static String FLOOR = ".";
-    public static String PLAYER = "X";
-    public static String ENEMY = "O";
-
     private Jugador player;
 
     private Planta[] mazmorra;
 
+    private Planta planta_actual;
 
     public Joc(Jugador j){
         this.player = j;
         this.mazmorra = new Planta[3];
 
-        Enemic[] enemics1 = new Enemic[]{
-                new Enemic(10, 10),
-                new Enemic(15, 8),
-                new Enemic(12, 20)
-        };
-        Enemic[] enemics2 = new Enemic[]{
-                new Enemic(10, 10),
-                new Enemic(15, 8),
-                new Enemic(12, 20)
-        };
-        Enemic[] enemics3 = new Enemic[]{
-                new Enemic(10, 10),
-                new Enemic(15, 8),
-                new Enemic(12, 20)
-        };
+        ArrayList<Enemic> enemics1 = new ArrayList<>();
+        Enemic e1 = new Enemic(5,10);
+        enemics1.add(e1);
+        Enemic e2 = new Enemic(5,10);
+        enemics1.add(e2);
+        Enemic e3 = new Enemic(5,10);
+        enemics1.add(e3);
+
+        ArrayList<Enemic> enemics2 = new ArrayList<>();
+        Enemic e4 = new Enemic(10,20);
+        enemics2.add(e4);
+        Enemic e5 = new Enemic(10,20);
+        enemics2.add(e4);
+        Enemic e6 = new Enemic(10,20);
+        enemics2.add(e6);
+
+        ArrayList<Enemic> enemics3 = new ArrayList<>();
+        Enemic e7 = new Enemic(20,40);
+        enemics3.add(e7);
+        Enemic e8 = new Enemic(10,20);
+        enemics3.add(e8);
+        Enemic e9 = new Enemic(10,20);
+        enemics3.add(e9);
+
         this.mazmorra[0] = new Planta(3, FLOOR1, enemics1);
         this.mazmorra[1] = new Planta(4, FLOOR2, enemics2);
         this.mazmorra[2] = new Planta(5, FLOOR3, enemics3);
+
+        this.planta_actual = this.mazmorra[0];
     }
 
 
     public void battle(){
 
+    }
+
+    public void gameOver(){
+
+    }
+
+    public void giveItem(Item i){
+        this.player.addItem(i);
     }
 
     public void passarPlanta(){

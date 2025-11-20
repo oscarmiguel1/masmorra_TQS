@@ -11,8 +11,6 @@ public class Jugador {
 
     private ArrayList<Item> inventari;
 
-    private int lim_x;
-    private int lim_y;
     private int hp_actual;
     private int max_hp;
 
@@ -24,8 +22,6 @@ public class Jugador {
     public Jugador(){
         this.pos_x = 0;
         this.pos_y = 0;
-        this.lim_x = 79;
-        this.lim_y = 19;
         this.max_hp = 20;
         this.hp_actual = this.max_hp;
         this.exp = 0;
@@ -43,26 +39,42 @@ public class Jugador {
 
     public Item getInventari(int n) {return this.inventari.get(n);}
     public void addItem(Item i) {this.inventari.add(i);}
-    public void moveUp() {
-        if(this.pos_y-1 > 0){
-            this.pos_y--;
+    public void moveRight(Planta p) {
+        int newX = pos_x + 1; // movimiento provisional
+        int newY = pos_y;
+
+        if (p.isValidPosition(newX, newY)) {
+            pos_x = newX; // solo movemos si es válido
         }
     }
-    public void moveDown() {
-        if(this.pos_y+1 <= this.lim_y){
-            this.pos_y++;
+
+    public void moveLeft(Planta p) {
+        int newX = pos_x - 1;
+        int newY = pos_y;
+
+        if (p.isValidPosition(newX, newY)) {
+            pos_x = newX;
         }
     }
-    public void moveRight(){
-        if(this.pos_x+1 < this.lim_x){
-            this.pos_x++;
+
+    public void moveUp(Planta p) {
+        int newX = pos_x;
+        int newY = pos_y - 1;
+
+        if (p.isValidPosition(newX, newY)) {
+            pos_y = newY;
         }
     }
-    public void moveleft(){
-          if(this.pos_x-1 > 0){
-            this.pos_x--;
+
+    public void moveDown(Planta p) {
+        int newX = pos_x;
+        int newY = pos_y + 1;
+
+        if (p.isValidPosition(newX, newY)) {
+            pos_y = newY;
         }
     }
+
     public int getHP(){
         return this.hp_actual;
     }
@@ -87,6 +99,12 @@ public class Jugador {
             }
         }
     
+    }
+
+    public void openDoor(Planta p){
+        if(p.getPlayerTile(this.pos_x,this.pos_y) == 'M'){
+            p.openDoor();
+        }
     }
 
     public void setEXP(int e){

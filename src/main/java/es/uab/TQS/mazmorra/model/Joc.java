@@ -222,7 +222,7 @@ public class Joc {
     }
 
     public void passarPlanta(){
-
+        //passar planta
     }
 
 

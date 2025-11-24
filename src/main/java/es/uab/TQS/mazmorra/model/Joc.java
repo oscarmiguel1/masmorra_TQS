@@ -1,8 +1,27 @@
 package es.uab.TQS.mazmorra.model;
 
+import com.googlecode.lanterna.input.KeyStroke;
+
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
+import es.uab.TQS.mazmorra.model.Enemic;
+import es.uab.TQS.mazmorra.model.Jugador;
+import es.uab.TQS.mazmorra.model.Planta;
+
 import java.util.ArrayList;
 
 public class Joc {
+
+    enum GameState {
+        EXPLORING,
+        INVENTORY
+    }
 
     public static String[] FLOOR1 = {
             "################################################################################",
@@ -80,8 +99,15 @@ public class Joc {
 
     private Planta planta_actual;
 
+    GameState currentState;
+
     public Joc(Jugador j){
         this.player = j;
+        this.currentState = GameState.EXPLORING;
+    }
+
+
+    public void startGame(){
         this.mazmorra = new Planta[3];
 
         ArrayList<Enemic> enemics1 = new ArrayList<>();
@@ -113,10 +139,77 @@ public class Joc {
         this.mazmorra[2] = new Planta(5, FLOOR3, enemics3);
 
         this.planta_actual = this.mazmorra[0];
+
+        this.player.setInitialPos(38,19);
+
+        boolean seguir = true;
+
+
+
+        while (seguir) {
+            screen.clear();
+
+            if (currentState == GameState.EXPLORING) {
+                screen.clear();            // SOLO limpiar cuando explores
+                drawDungeon(screen, tg, j);
+            } else if (currentState == GameState.INVENTORY) {
+                // NO limpiar pantalla → el mapa permanece
+                drawDungeon(screen, tg, j); // redibujar el mapa
+                drawInventory(screen, tg);  // panel superpuesto
+            }
+
+            screen.refresh();
+
+            KeyStroke key = screen.pollInput();
+            if (key != null) {
+                switch (key.getKeyType()) {
+                    case ArrowUp -> {
+                        if (currentState == GameState.EXPLORING) player.moveUp(this.planta_actual,this);
+                    }
+                    case ArrowDown -> {
+                        if (currentState == GameState.EXPLORING) player.moveDown(this.planta_actual,this);
+                    }
+                    case ArrowLeft -> {
+                        if (currentState == GameState.EXPLORING) player.moveLeft(this.planta_actual,this);
+                    }
+                    case ArrowRight -> {
+                        if (currentState == GameState.EXPLORING) player.moveRight(this.planta_actual,this);
+                    }
+                    case Escape, EOF -> seguir = false;
+                    default -> {
+                        if (key.getCharacter() != null) {
+                            char c = Character.toUpperCase(key.getCharacter());
+                            if (c == 'I') {
+                                // alternar entre modos
+                                currentState = (currentState == GameState.EXPLORING)
+                                        ? GameState.INVENTORY
+                                        : GameState.EXPLORING;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Thread.sleep(50);
+        }
+
+
     }
 
+    public void battle(int x, int y){
+        Enemic e = this.planta_actual.getEnemy(x,y);
 
-    public void battle(){
+        int p_hp = this.player.getHP();
+
+        p_hp =  p_hp - e.getAtk();
+
+        if(p_hp <= 0){
+            //game_over
+        }else{
+            this.player.setHP(p_hp);
+            this.planta_actual.enemyDefeated();
+        }
+
 
     }
 

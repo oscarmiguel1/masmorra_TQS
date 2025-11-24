@@ -39,39 +39,59 @@ public class Jugador {
 
     public Item getInventari(int n) {return this.inventari.get(n);}
     public void addItem(Item i) {this.inventari.add(i);}
-    public void moveRight(Planta p) {
+    public void moveRight(Planta p,Joc j) {
         int newX = pos_x + 1; // movimiento provisional
         int newY = pos_y;
 
         if (p.isValidPosition(newX, newY)) {
-            pos_x = newX; // solo movemos si es válido
+            if (p.isEnemyPosition(newX, newY)) {
+                pos_x = newX;
+                j.battle(pos_x,pos_y);
+            } else {
+                pos_x = newX;
+            }// solo movemos si es válido
         }
     }
 
-    public void moveLeft(Planta p) {
+    public void moveLeft(Planta p,Joc j) {
         int newX = pos_x - 1;
         int newY = pos_y;
 
         if (p.isValidPosition(newX, newY)) {
-            pos_x = newX;
+            if (p.isEnemyPosition(newX, newY)) {
+                pos_x = newX;
+                j.battle(pos_x,pos_y);
+            } else {
+                pos_x = newX;
+            }// solo movemos si es válido
         }
     }
 
-    public void moveUp(Planta p) {
+    public void moveUp(Planta p,Joc j) {
         int newX = pos_x;
         int newY = pos_y - 1;
 
         if (p.isValidPosition(newX, newY)) {
-            pos_y = newY;
+            if (p.isEnemyPosition(newX, newY)) {
+                pos_y = newY;
+                j.battle(pos_x,pos_y);
+            } else {
+                pos_y = newY;
+            }// solo movemos si es válido
         }
     }
 
-    public void moveDown(Planta p) {
+    public void moveDown(Planta p,Joc j) {
         int newX = pos_x;
         int newY = pos_y + 1;
 
         if (p.isValidPosition(newX, newY)) {
-            pos_y = newY;
+            if (p.isEnemyPosition(newX, newY)) {
+                pos_y = newY;
+                j.battle(pos_x,pos_y);
+            } else {
+                pos_y = newY;
+            }// solo movemos si es válido
         }
     }
 

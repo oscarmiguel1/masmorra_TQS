@@ -38,10 +38,7 @@ public class Main {
             "################################################################################"
     };
 
-    enum GameState {
-        EXPLORING,
-        INVENTORY
-    }
+
 
     public static void main(String[] args) {
 
@@ -61,60 +58,6 @@ public class Main {
             TextGraphics tg = screen.newTextGraphics();
             j.setInitialPos(38, 19);
 
-            boolean seguir = true;
-            GameState currentState = GameState.EXPLORING;
-
-            while (seguir) {
-                screen.clear();
-
-                if (currentState == GameState.EXPLORING) {
-                    screen.clear();            // SOLO limpiar cuando explores
-                    drawDungeon(screen, tg, j);
-                } else if (currentState == GameState.INVENTORY) {
-                    // NO limpiar pantalla → el mapa permanece
-                    drawDungeon(screen, tg, j); // redibujar el mapa
-                    drawInventory(screen, tg);  // panel superpuesto
-                }
-
-                screen.refresh();
-
-                KeyStroke key = screen.pollInput();
-                if (key != null) {
-                    switch (key.getKeyType()) {
-                        case ArrowUp -> {
-                            if (currentState == GameState.EXPLORING) j.moveUp(p);
-                        }
-                        case ArrowDown -> {
-                            if (currentState == GameState.EXPLORING) j.moveDown(p);
-                        }
-                        case ArrowLeft -> {
-                            if (currentState == GameState.EXPLORING) j.moveLeft(p);
-                        }
-                        case ArrowRight -> {
-                            if (currentState == GameState.EXPLORING) j.moveRight(p);
-                        }
-                        case Escape, EOF -> seguir = false;
-                        default -> {
-                            if (key.getCharacter() != null) {
-                                char c = Character.toUpperCase(key.getCharacter());
-                                if (c == 'I') {
-                                    // alternar entre modos
-                                    currentState = (currentState == GameState.EXPLORING)
-                                            ? GameState.INVENTORY
-                                            : GameState.EXPLORING;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Thread.sleep(50);
-            }
-
-            screen.stopScreen();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private static void drawDungeon(Screen screen, TextGraphics tg, Jugador j) {

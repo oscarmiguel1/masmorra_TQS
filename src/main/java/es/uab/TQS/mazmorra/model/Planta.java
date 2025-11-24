@@ -28,11 +28,29 @@ public class Planta {
     this.enemics = en;
   }
 
+  public Enemic getEnemy(int x, int y) {
+        for (Enemic e : enemics) {
+            if (e.getPos_x() == x && e.getPos_y() == y) {
+                return e;
+            }
+        }
+        return null; // No hay enemigo en esa casilla
+    }
+
   public boolean isValidPosition(int x, int y){
       return x >= 0 && x <= lim_x &&
               y >= 0 && y <= lim_y &&
               this.floorLayout[y].charAt(x) != '#';
   }
+
+ public boolean isEnemyPosition(int x, int y) {
+    for (Enemic e : enemics) {
+        if (e.getPos_x() == x && e.getPos_y() == y) {
+            return true;
+        }
+    }
+    return false;
+ }
 
   public char getPlayerTile(int x, int y){
       return this.floorLayout[y].charAt(x);

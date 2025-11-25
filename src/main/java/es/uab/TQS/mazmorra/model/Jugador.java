@@ -9,7 +9,7 @@ public class Jugador {
     private int pos_x;
     private int pos_y;
 
-    private ArrayList<Item> inventari;
+    private final ArrayList<Item> inventari;
 
     private int hp_actual;
     private int max_hp;
@@ -27,6 +27,7 @@ public class Jugador {
         this.exp = 0;
         this.exp_necesaria = 100;
         this.lv = 1;
+        this.inventari = new ArrayList<>();
     }
 
     public int getLvl(){
@@ -37,7 +38,8 @@ public class Jugador {
 
     public int getPos_y() {return this.pos_y;}
 
-    public Item getInventari(int n) {return this.inventari.get(n);}
+    public void giveItem(Item a) {this.inventari.add(a);}
+    public ArrayList<Item> getInventari() {return this.inventari;}
     public void addItem(Item i) {this.inventari.add(i);}
     public void moveRight(Planta p,Joc j) {
         int newX = pos_x + 1; // movimiento provisional
@@ -99,6 +101,8 @@ public class Jugador {
         return this.hp_actual;
     }
 
+    public int getMax_hp() {return this.max_hp;}
+
     public void setInitialPos(int x,int y) {
         this.pos_x = x;
         this.pos_y = y;
@@ -128,9 +132,11 @@ public class Jugador {
     }
 
     public void setEXP(int e){
-        this.exp = e;
+        //this.exp = e;
+        System.out.println(this.exp);
         if(e >= this.exp_necesaria){
-            this.exp = this.exp_necesaria;
+            this.exp = 0;
+            lvUP();
         }else{
             if(e < 0){
                 this.exp = 0;
@@ -141,7 +147,10 @@ public class Jugador {
     }
 
     public void lvUP(){
-        
+        this.lv++;
+        this.max_hp = this.max_hp + (int) Math.round(this.max_hp * 0.1);
+        this.exp_necesaria = this.exp_necesaria + (int) Math.round(this.exp_necesaria * 0.1);
+        System.out.println(this.max_hp);
     }
 
 }

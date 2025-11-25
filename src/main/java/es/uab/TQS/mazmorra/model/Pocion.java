@@ -11,12 +11,12 @@ public class Pocion implements Item{
 
   @Override
   public String getNom(){
-    return "Pocion de vida";
+    return "Poció de vida";
   }
 
   @Override
   public String getDescripcio(){
-    return "Cura " + cura + "puntos de salud.";
+    return "Cura " + cura + " HP";
   }
 
   @Override

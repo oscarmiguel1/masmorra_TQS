@@ -23,9 +23,9 @@ public class Enemic {
     public int getPos_y() {return this.pos_y;}
 
 
-    public Enemic(int a, int exp){
-        this.pos_x = 0;
-        this.pos_y = 0;
+    public Enemic(int a, int exp, int x, int y){
+        this.pos_x = x;
+        this.pos_y = y;
         this.atk = a;
         this.given_exp = exp;
     }

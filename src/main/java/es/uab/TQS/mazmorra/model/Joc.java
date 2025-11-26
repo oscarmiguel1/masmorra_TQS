@@ -15,6 +15,7 @@ import es.uab.TQS.mazmorra.model.Enemic;
 import es.uab.TQS.mazmorra.model.Jugador;
 import es.uab.TQS.mazmorra.model.Planta;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Joc {
@@ -94,7 +95,7 @@ public class Joc {
             "################################################################################"
     };
 
-    private Jugador player;
+    private final Jugador player;
 
     private Planta[] mazmorra;
 
@@ -114,7 +115,7 @@ public class Joc {
         this.num_planta = 0;
 
         ArrayList<Enemic> enemics1 = new ArrayList<>();
-        Enemic e1 = new Enemic(5,50,7,4);
+        Enemic e1 = new Enemic(50,50,7,4);
         enemics1.add(e1);
         Enemic e2 = new Enemic(5,50,59,4);
         enemics1.add(e2);
@@ -185,26 +186,26 @@ public class Joc {
                         // ----------------- MOVIMIENTO / CURSOR -----------------
                         case ArrowUp -> {
                             if (currentState == GameState.EXPLORING)
-                                player.moveUp(this.planta_actual, this);
+                                player.moveUp(this.planta_actual, this,screen);
                             else if (currentState == GameState.INVENTORY)
                                 idx = Math.max(0, idx - 1);
                         }
 
                         case ArrowDown -> {
                             if (currentState == GameState.EXPLORING)
-                                player.moveDown(this.planta_actual, this);
+                                player.moveDown(this.planta_actual, this,screen);
                             else if (currentState == GameState.INVENTORY)
                                 idx = Math.min(player.getInventari().size() - 1, idx + 1);
                         }
 
                         case ArrowLeft -> {
                             if (currentState == GameState.EXPLORING)
-                                player.moveLeft(this.planta_actual, this);
+                                player.moveLeft(this.planta_actual, this,screen);
                         }
 
                         case ArrowRight -> {
                             if (currentState == GameState.EXPLORING)
-                                player.moveRight(this.planta_actual, this);
+                                player.moveRight(this.planta_actual, this,screen);
                         }
 
                         // ----------------- INVENTARIO / ENTER -----------------
@@ -247,7 +248,7 @@ public class Joc {
 
     }
 
-    public void battle(int x, int y){
+    public void battle(int x, int y, Screen s) throws IOException {
         Enemic e = this.planta_actual.getEnemy(x,y);
 
         int p_hp = this.player.getHP();
@@ -257,7 +258,7 @@ public class Joc {
         p_exp = p_exp + e.getEXP();
 
         if(p_hp <= 0){
-            gameOver();
+            this.planta_actual.gameOver(s);
         }else{
             this.player.setHP(p_hp);
             this.player.setEXP(p_exp);
@@ -273,9 +274,6 @@ public class Joc {
     }
 
 
-    public void gameOver(){
-        //dibujar pantalla de intentar de nuevo?
-    }
 
     public void giveItem(Item i){
         this.player.addItem(i);

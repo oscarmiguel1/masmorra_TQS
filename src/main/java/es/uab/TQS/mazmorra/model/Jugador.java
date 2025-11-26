@@ -2,6 +2,9 @@
 package es.uab.TQS.mazmorra.model;
 
 
+import com.googlecode.lanterna.screen.Screen;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Jugador {
@@ -41,56 +44,56 @@ public class Jugador {
     public void giveItem(Item a) {this.inventari.add(a);}
     public ArrayList<Item> getInventari() {return this.inventari;}
     public void addItem(Item i) {this.inventari.add(i);}
-    public void moveRight(Planta p,Joc j) {
+    public void moveRight(Planta p,Joc j, Screen s) throws IOException {
         int newX = pos_x + 1; // movimiento provisional
         int newY = pos_y;
 
         if (p.isValidPosition(newX, newY)) {
             if (p.isEnemyPosition(newX, newY)) {
                 pos_x = newX;
-                j.battle(pos_x,pos_y);
+                j.battle(pos_x,pos_y,s);
             } else {
                 pos_x = newX;
             }// solo movemos si es válido
         }
     }
 
-    public void moveLeft(Planta p,Joc j) {
+    public void moveLeft(Planta p,Joc j, Screen s) throws IOException {
         int newX = pos_x - 1;
         int newY = pos_y;
 
         if (p.isValidPosition(newX, newY)) {
             if (p.isEnemyPosition(newX, newY)) {
                 pos_x = newX;
-                j.battle(pos_x,pos_y);
+                j.battle(pos_x,pos_y,s);
             } else {
                 pos_x = newX;
             }// solo movemos si es válido
         }
     }
 
-    public void moveUp(Planta p,Joc j) {
+    public void moveUp(Planta p,Joc j, Screen s) throws IOException {
         int newX = pos_x;
         int newY = pos_y - 1;
 
         if (p.isValidPosition(newX, newY)) {
             if (p.isEnemyPosition(newX, newY)) {
                 pos_y = newY;
-                j.battle(pos_x,pos_y);
+                j.battle(pos_x,pos_y,s);
             } else {
                 pos_y = newY;
             }// solo movemos si es válido
         }
     }
 
-    public void moveDown(Planta p,Joc j) {
+    public void moveDown(Planta p, Joc j, Screen s) throws IOException {
         int newX = pos_x;
         int newY = pos_y + 1;
 
         if (p.isValidPosition(newX, newY)) {
             if (p.isEnemyPosition(newX, newY)) {
                 pos_y = newY;
-                j.battle(pos_x,pos_y);
+                j.battle(pos_x,pos_y,s);
             } else {
                 pos_y = newY;
             }// solo movemos si es válido
@@ -133,7 +136,6 @@ public class Jugador {
 
     public void setEXP(int e){
         //this.exp = e;
-        System.out.println(this.exp);
         if(e >= this.exp_necesaria){
             this.exp = 0;
             lvUP();
@@ -150,7 +152,6 @@ public class Jugador {
         this.lv++;
         this.max_hp = this.max_hp + (int) Math.round(this.max_hp * 0.1);
         this.exp_necesaria = this.exp_necesaria + (int) Math.round(this.exp_necesaria * 0.1);
-        System.out.println(this.max_hp);
     }
 
 }

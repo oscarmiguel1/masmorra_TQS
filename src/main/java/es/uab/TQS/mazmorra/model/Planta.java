@@ -5,8 +5,10 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Planta {
@@ -168,6 +170,34 @@ public class Planta {
 
         tg.setForegroundColor(TextColor.ANSI.YELLOW);
         tg.putString(4, 13, "[I] Tancar invent.");
+    }
+
+    public void gameOver(Screen screen) throws IOException {
+        screen.clear();
+
+        // Texto "GAME OVER"
+        String msg = "== GAME OVER ==";
+        String retryMsg = "Pulsa ENTER para reintentar";
+
+        // Pintar texto en el centro aproximado
+        screen.newTextGraphics().putString(10, 5, msg);
+        screen.newTextGraphics().putString(10, 7, retryMsg);
+
+        try {
+            screen.refresh();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Esperar a que se pulse ENTER
+        KeyStroke key;
+        do {
+            key = screen.readInput();
+        } while (key == null || key.getKeyType() != com.googlecode.lanterna.input.KeyType.Enter);
+
+        // Limpiar y continuar el juego
+        screen.clear();
+        screen.refresh();
     }
 
 

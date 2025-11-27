@@ -18,24 +18,27 @@ public class Enemic {
 
     private int given_exp;
 
-    public int getPos_x() {return this.pos_x;}
+    public int getPos_x() {
+        return this.pos_x;
+    }
 
-    public int getPos_y() {return this.pos_y;}
+    public int getPos_y() {
+        return this.pos_y;
+    }
 
+    public int getAtk() {
+        return this.atk;
+    }
 
-    public Enemic(int a, int exp, int x, int y){
+    public int getEXP() {
+        return this.given_exp;
+    }
+
+    public Enemic(int a, int exp, int x, int y) {
         this.pos_x = x;
         this.pos_y = y;
         this.atk = a;
         this.given_exp = exp;
-    }
-
-    public int getAtk(){return this.atk;}
-
-    public int getEXP() {return this.given_exp;}
-
-    public void die(){
-
     }
 
 }

@@ -262,7 +262,7 @@ public class Joc {
         }else{
             this.player.setHP(p_hp);
             this.player.setEXP(p_exp);
-            this.planta_actual.enemyDefeated();
+            this.planta_actual.enemyDefeated(x,y);
             if(this.planta_actual.getEnemiesLeft() == 0){
                 this.player.giveItem(new Llave(this.player));
                 this.num_planta++;

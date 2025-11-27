@@ -79,10 +79,15 @@ public class Planta {
 
   public boolean getDoorState() { return this.doorOpen; }
 
-  public void enemyDefeated() {
+  public void enemyDefeated(int x, int y) {
     if(this.enemiesLeft-1 >= 0) {
       this.enemiesLeft--;
-      this.enemics.removeFirst();
+      for(int i = 0; i < this.enemics.size(); i++){
+        if(this.enemics.get(i).getPos_x() == x && this.enemics.get(i).getPos_y() == y){
+          this.enemics.remove(i);
+        }
+      }
+      //this.enemics.removeFirst();
     }else{
         this.enemiesLeft = 0;
         this.enemics.clear();

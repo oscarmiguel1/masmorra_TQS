@@ -1,7 +1,6 @@
 //Jugador
 package es.uab.TQS.mazmorra.model;
 
-
 import com.googlecode.lanterna.screen.Screen;
 
 import java.io.IOException;
@@ -21,16 +20,19 @@ public class Jugador {
     private int exp_necesaria;
     private int lv;
 
-
     public Jugador() {
         this.pos_x = 0;
         this.pos_y = 0;
+        this.setStatsInicials();
+        this.inventari = new ArrayList<>();
+    }
+
+    public void setStatsInicials() {
         this.max_hp = 20;
         this.hp_actual = this.max_hp;
         this.exp = 0;
         this.exp_necesaria = 100;
         this.lv = 1;
-        this.inventari = new ArrayList<>();
     }
 
     public int getLvl() {
@@ -75,7 +77,7 @@ public class Jugador {
                 j.battle(pos_x, pos_y);
             } else {
                 pos_x = newX;
-            }// solo movemos si es válido
+            } // solo movemos si es válido
         }
     }
 
@@ -89,7 +91,7 @@ public class Jugador {
                 j.battle(pos_x, pos_y);
             } else {
                 pos_x = newX;
-            }// solo movemos si es válido
+            } // solo movemos si es válido
         }
     }
 
@@ -103,7 +105,7 @@ public class Jugador {
                 j.battle(pos_x, pos_y);
             } else {
                 pos_y = newY;
-            }// solo movemos si es válido
+            } // solo movemos si es válido
         }
     }
 
@@ -117,16 +119,14 @@ public class Jugador {
                 j.battle(pos_x, pos_y);
             } else {
                 pos_y = newY;
-            }// solo movemos si es válido
+            } // solo movemos si es válido
         }
     }
-
 
     public void setInitialPos(int x, int y) {
         this.pos_x = x;
         this.pos_y = y;
     }
-
 
     public void setHP(int h) {
         if (h >= this.max_hp) {
@@ -148,7 +148,7 @@ public class Jugador {
     }
 
     public void setEXP(int e) {
-        //this.exp = e;
+        // this.exp = e;
         if (e >= this.exp_necesaria) {
             this.exp = 0;
             lvUP();

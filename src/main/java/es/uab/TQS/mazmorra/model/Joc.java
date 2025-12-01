@@ -1,23 +1,16 @@
 package es.uab.TQS.mazmorra.model;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
-import es.uab.TQS.mazmorra.vista.Interface;
-
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Joc {
 
-    enum GameState {
+    public enum GameState {
         EXPLORING,
         INVENTORY,
         GAME_OVER,
+        GAME_WON,
         INFO
     }
 
@@ -44,51 +37,50 @@ public class Joc {
             "#                                                                              #",
             "################################################################################"
     };
-
     public static String[] FLOOR2 = {
             "################################################################################",
-            "#.................##########........................#########.................#",
-            "#.................#........#........................#.......#.................#",
-            "#.................#........###########    ###########.......#######  ##########",
-            "#.................#..................#    #.......................#  #........#",
-            "#.................###########........######...........#############  #........#",
-            "#............................#..............#.......#.............. #........#",
-            "#............................#..............#.......#.............. #........#",
-            "#######   ####################     #######.........#..............  #######   #",
-            "#.....#   #..................#     #.....#.........#..............# #.....#   #",
-            "#.....#####..................#######.....###########..............# #.....#####",
-            "#.................................#......................#.........#..........#",
-            "#.................................#......................#.........#..........#",
-            "###########     ###################......................#########......#####.#",
-            "#.........#     #...................................................#.........#",
-            "#.........#######...................................................###########",
-            "#................................................................................",
-            "#................................................................................",
-            "#................................................................................",
-            "#................................................................................",
+            "#             #                        #              #                        #",
+            "#    #####    #    ################    #    ######    #    ################    #",
+            "#    #   #    #    #              #    #    #    #    #    #              #    #",
+            "#    #   #         #              #         #    #         #              #    #",
+            "#    #   ###########              ###########    ###########              #    #",
+            "#    #                                                                    #    #",
+            "#    #              #######                #######                #####   #    #",
+            "######              #     #                #     #                #   #   ######",
+            "#                   #     #                #     #                #   #        #",
+            "#    ################     ##################     ##################   #####    #",
+            "#    #                                                                         #",
+            "#    #              #######                #######                #########    #",
+            "######              #     #                #     #                #       #    #",
+            "#        ############     ##################     ##################            #",
+            "#        #                #                      #                             #",
+            "#        #                #                      #                        #    #",
+            "#   ######   ##############   ####################   ######################    #",
+            "#   #        #                #                      #                    #    #",
+            "#            #                #                      #                    #    #",
             "################################################################################"
     };
     public static String[] FLOOR3 = {
             "################################################################################",
-            "#........#####.......................#########...................##############",
-            "#........#...#.......................#.......#...................#............#",
-            "#........#...###########    ##########.......#############  #######..........#",
-            "#........#..............#    #............................#  #................#",
-            "#........############...######...........#############....#  #................#",
-            "#.......................#.........#.....#..............#   #..................#",
-            "#.......................#.........#.....#..............#   #..................#",
-            "######   ##################    #######..#..............#   #######   ##########",
-            "#....#   #................#    #.....#..#..............#  #.....#   #.........#",
-            "#....#####................#######.....###########......#  #.....#####.........#",
-            "#.............................#....................#...#  #...................#",
-            "#.............................#....................#...#  #...................#",
-            "#########     #################....................#######......###############",
-            "#.......#     #.....................................................#.........#",
-            "#.......#######.....................................................###########",
-            "#..............................................................................#",
-            "#..............................................................................#",
-            "#..............................................................................#",
-            "#..............................................................................#",
+            "#                                                                              #",
+            "#      ############          ############          ############      #######   #",
+            "#      #          #          #          #          #          #      #     #   #",
+            "#      #          #          #          #          #          #      #     #   #",
+            "#      #          #          #          #          #          #      #######   #",
+            "#      ############          ############          ############                #",
+            "#                                                                              #",
+            "#                                                                              #",
+            "#           ########            ########            ########                   #",
+            "#           ########            ########            ########                   #",
+            "#           ########            ########            ########                   #",
+            "#           ########            ########            ########                   #",
+            "#                                                                              #",
+            "#                                                                              #",
+            "#      ########        ####                ####        ########                #",
+            "#      ########        ####                ####        ########      #######   #",
+            "#      ########        ####                ####        ########      #     #   #",
+            "#      ########        ####                ####        ########      #     #   #",
+            "#      ########        ####                ####        ########      #######   #",
             "################################################################################"
     };
 
@@ -100,13 +92,12 @@ public class Joc {
     int num_planta;
     boolean game_over;
     GameState currentState;
-    Interface hud;
     Item itemActual;
 
     public Joc(Jugador j) {
         this.player = j;
         this.currentState = GameState.EXPLORING;
-        this.hud = new Interface();
+        this.currentState = GameState.EXPLORING;
         this.game_over = false;
         this.itemActual = null;
     }
@@ -118,148 +109,70 @@ public class Joc {
 
     public void startGame() {
         this.mazmorra = new Planta[3];
+        this.player.setStatsInicials();
         this.num_planta = 0;
+        this.currentState = GameState.EXPLORING;
+        this.game_over = false;
 
         ArrayList<Enemic> enemics1 = new ArrayList<>();
-        Enemic e1 = new Enemic(5, 50, 7, 4);
+        Enemic e1 = new Enemic(1, 50, 7, 4);
         enemics1.add(e1);
-        Enemic e2 = new Enemic(5, 50, 59, 4);
+        Enemic e2 = new Enemic(1, 50, 59, 4);
         enemics1.add(e2);
-        Enemic e3 = new Enemic(5, 50, 76, 10);
+        Enemic e3 = new Enemic(50, 50, 76, 10);
         enemics1.add(e3);
 
         ArrayList<Enemic> enemics2 = new ArrayList<>();
-        Enemic e4 = new Enemic(10, 20, 4, 7);
+        Enemic e4 = new Enemic(1, 20, 70, 13);
         enemics2.add(e4);
-        Enemic e5 = new Enemic(10, 20, 4, 7);
+        Enemic e5 = new Enemic(1, 20, 23, 13);
         enemics2.add(e5);
-        Enemic e6 = new Enemic(10, 20, 4, 7);
+        Enemic e6 = new Enemic(1, 20, 21, 3);
         enemics2.add(e6);
 
         ArrayList<Enemic> enemics3 = new ArrayList<>();
-        Enemic e7 = new Enemic(20, 40, 4, 7);
+        Enemic e7 = new Enemic(1, 40, 25, 7);
         enemics3.add(e7);
-        Enemic e8 = new Enemic(10, 20, 4, 7);
+        Enemic e8 = new Enemic(1, 20, 72, 14);
         enemics3.add(e8);
-        Enemic e9 = new Enemic(10, 20, 4, 7);
+        Enemic e9 = new Enemic(1, 20, 3, 19);
         enemics3.add(e9);
 
-        this.mazmorra[0] = new Planta(3, FLOOR1, enemics1);
-        this.mazmorra[1] = new Planta(4, FLOOR2, enemics2);
-        this.mazmorra[2] = new Planta(5, FLOOR3, enemics3);
+        this.mazmorra[0] = new Planta(3, FLOOR1, enemics1, 20, 2);
+        this.mazmorra[1] = new Planta(3, FLOOR2, enemics2, 2, 12);
+        this.mazmorra[2] = new Planta(3, FLOOR3, enemics3, 35, 1);
 
         this.planta_actual = this.mazmorra[0];
         this.player.setInitialPos(38, 19);
+    }
 
+    public Jugador getPlayer() {
+        return player;
+    }
 
-        boolean jugando = true;
+    public Planta getPlantaActual() {
+        return planta_actual;
+    }
 
-        try {
-            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
-                    .setForceAWTOverSwing(false)
-                    .setTerminalEmulatorTitle("Mazmorra")
-                    .setPreferTerminalEmulator(true);
+    public GameState getCurrentState() {
+        return currentState;
+    }
 
-            Terminal terminal = terminalFactory.createTerminal();
-            Screen screen = new TerminalScreen(terminal);
-            screen.startScreen();
-            screen.setCursorPosition(null);
+    public Item getItemActual() {
+        return itemActual;
+    }
 
-            TextGraphics tg = screen.newTextGraphics();
-            int idx = 0;
-
-            while (jugando) {
-                screen.clear();
-
-                switch (currentState) {
-                    case EXPLORING -> hud.dibuixarMazmorra(screen, tg, this.player, this.planta_actual);
-                    case INVENTORY -> {
-                        hud.dibuixarMazmorra(screen, tg, this.player, this.planta_actual);
-                        hud.dibuixarInventari(screen, tg, this.player, idx);
-                    }
-                    case GAME_OVER -> hud.gameOver(screen);
-                    case INFO -> {
-                        hud.dibuixarMazmorra(screen, tg, this.player, this.planta_actual);
-
-                        if (itemActual == null) {
-                            hud.ajudaPorta(screen, tg);
-                        } else {
-                            hud.mostrarItemTrobat(screen, tg, itemActual.getNom());
-                        }
-                    }
-                }
-
-                screen.refresh();
-
-                if (currentState == GameState.INFO && System.currentTimeMillis() > infoMessageEndTime) {
-                    currentState = GameState.EXPLORING;
-                    this.itemActual = null;
-                }
-
-                KeyStroke key = screen.pollInput();
-                if (key != null) {
-                    switch (key.getKeyType()) {
-                        case ArrowUp -> {
-                            if (currentState == GameState.EXPLORING)
-                                this.player.moveUp(this.planta_actual, this);
-                            else if (currentState == GameState.INVENTORY && !player.getInventari().isEmpty()) {
-                                idx = Math.max(0, idx - 1);
-                            }
-                        }
-                        case ArrowDown -> {
-                            if (currentState == GameState.EXPLORING)
-                                player.moveDown(this.planta_actual, this);
-                            else if (currentState == GameState.INVENTORY && !player.getInventari().isEmpty()) {
-                                idx = Math.min(this.player.getInventari().size() - 1, idx + 1);
-                            }
-                        }
-                        case ArrowLeft -> {
-                            if (currentState == GameState.EXPLORING)
-                                player.moveLeft(this.planta_actual, this);
-                        }
-                        case ArrowRight -> {
-                            if (currentState == GameState.EXPLORING)
-                                player.moveRight(this.planta_actual, this);
-                        }
-                        case Enter -> {
-                            if (currentState == GameState.INVENTORY && !this.player.getInventari().isEmpty()) {
-                                Item item = this.player.getInventari().get(idx);
-                                if (Objects.equals(item.getNom(), "Clau")) {
-                                    if (this.planta_actual.isDoorPosition(this.player.getPos_x(), this.player.getPos_y())) {
-                                        item.usarItem();
-                                        this.player.getInventari().remove(idx);
-                                        passarPlanta();
-                                    } else {
-                                        missatgeTemporal(2000);
-                                    }
-                                } else {
-                                    item.usarItem();
-                                    this.player.getInventari().remove(idx);
-                                }
-                                if (idx >= this.player.getInventari().size()) idx = 0;
-                            }
-                        }
-                        case Escape, EOF -> jugando = false;
-
-                        default -> {
-                            if (key.getCharacter() != null) {
-                                char c = Character.toUpperCase(key.getCharacter());
-                                if (c == 'I') {
-                                    idx = 0;
-                                    currentState = (currentState == GameState.EXPLORING)
-                                            ? GameState.INVENTORY
-                                            : GameState.EXPLORING;
-                                }
-                            }
-                        }
-                    }
-                }
-                Thread.sleep(5);
-            }
-            screen.stopScreen();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void checkInfoMessageDuration() {
+        if (currentState == GameState.INFO && System.currentTimeMillis() > infoMessageEndTime) {
+            currentState = GameState.EXPLORING;
+            this.itemActual = null;
         }
+    }
+
+    public void toggleInventory() {
+        currentState = (currentState == GameState.EXPLORING)
+                ? GameState.INVENTORY
+                : GameState.EXPLORING;
     }
 
     public void battle(int x, int y) {
@@ -292,16 +205,18 @@ public class Joc {
         }
     }
 
-
     public void giveItem(Item i) {
         this.player.addItem(i);
     }
 
     public void passarPlanta() {
-        this.num_planta++;
-        this.planta_actual = mazmorra[num_planta];
-        this.player.setInitialPos(38, 19);
+        if (this.num_planta != 2) {
+            this.num_planta++;
+            this.planta_actual = mazmorra[num_planta];
+            this.player.setInitialPos(38, 19);
+        } else {
+            currentState = GameState.GAME_WON;
+        }
     }
-
 
 }

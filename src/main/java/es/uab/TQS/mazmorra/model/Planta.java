@@ -13,26 +13,23 @@ import java.util.ArrayList;
 
 public class Planta {
 
-
     private final int door_posX;
     private final int door_posY;
 
     private boolean doorOpen;
 
-
     private final String[] floorLayout;
     private final ArrayList<Enemic> enemics;
     private int enemiesLeft;
 
-    public Planta(int e, String[] f, ArrayList<Enemic> en) {
-        this.door_posX = 20;
-        this.door_posY = 2;
+    public Planta(int e, String[] f, ArrayList<Enemic> en, int dX, int dY) {
+        this.door_posX = dX;
+        this.door_posY = dY;
         this.doorOpen = false;
         this.enemiesLeft = e;
         this.floorLayout = f;
         this.enemics = en;
     }
-
 
     public Enemic getEnemy(int x, int y) {
         for (Enemic e : enemics) {
@@ -71,7 +68,6 @@ public class Planta {
         return this.doorOpen;
     }
 
-
     public boolean isValidPosition(int x, int y) {
         int lim_x = 79;
         int lim_y = 19;
@@ -79,7 +75,6 @@ public class Planta {
                 y >= 0 && y <= lim_y &&
                 this.floorLayout[y].charAt(x) != '#';
     }
-
 
     public boolean isEnemyPosition(int x, int y) {
         for (Enemic e : enemics) {
@@ -90,8 +85,8 @@ public class Planta {
         return false;
     }
 
-    public boolean isDoorPosition(int x, int y){
-        if(door_posX == x && door_posY == y){
+    public boolean isDoorPosition(int x, int y) {
+        if (door_posX == x && door_posY == y) {
             return true;
         }
         return false;
@@ -101,7 +96,6 @@ public class Planta {
         this.doorOpen = true;
     }
 
-
     public void enemyDefeated(int x, int y) {
         if (this.enemiesLeft - 1 >= 0) {
             this.enemiesLeft--;
@@ -110,12 +104,11 @@ public class Planta {
                     this.enemics.remove(i);
                 }
             }
-            //this.enemics.removeFirst();
+            // this.enemics.removeFirst();
         } else {
             this.enemiesLeft = 0;
             this.enemics.clear();
         }
     }
-
 
 }

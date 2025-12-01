@@ -52,6 +52,7 @@ public class LoopJoc {
                         hud.dibuixarInventari(screen, tg, joc.getPlayer(), idx);
                     }
                     case GAME_OVER -> hud.gameOver(screen);
+                    case GAME_WON -> hud.gameWon(screen);
                     case INFO -> {
                         hud.dibuixarMazmorra(screen, tg, joc.getPlayer(), joc.getPlantaActual());
                         if (joc.getItemActual() == null) {
@@ -116,6 +117,9 @@ public class LoopJoc {
 
                             if (currentState == Joc.GameState.GAME_OVER) {
                                 this.joc.startGame();
+                            }
+                            if (currentState == Joc.GameState.GAME_WON) {
+                                jugando = false;
                             }
                         }
                         case Escape, EOF -> jugando = false;

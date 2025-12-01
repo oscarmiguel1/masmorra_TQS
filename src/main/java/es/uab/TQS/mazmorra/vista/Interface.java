@@ -107,7 +107,17 @@ public class Interface { // clase para dibujar la vista
         screen.clear();
 
         String msg = "== GAME OVER ==";
-        String retryMsg = "Pulsa ENTER para reintentar";
+        String retryMsg = "Premi ENTER per a tornar a jugar";
+
+        screen.newTextGraphics().putString(10, 5, msg);
+        screen.newTextGraphics().putString(10, 7, retryMsg);
+    }
+
+    public void gameWon(Screen screen) throws IOException {
+        screen.clear();
+
+        String msg = "== GAME WON ==";
+        String retryMsg = "Premi ENTER";
 
         screen.newTextGraphics().putString(10, 5, msg);
         screen.newTextGraphics().putString(10, 7, retryMsg);

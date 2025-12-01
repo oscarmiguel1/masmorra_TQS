@@ -10,6 +10,7 @@ public class Joc {
         EXPLORING,
         INVENTORY,
         GAME_OVER,
+        GAME_WON,
         INFO
     }
 
@@ -76,8 +77,8 @@ public class Joc {
             "#                                                                              #",
             "#                                                                              #",
             "#      ########        ####                ####        ########                #",
-            "#      ########        ####                ####        ########                #",
             "#      ########        ####                ####        ########      #######   #",
+            "#      ########        ####                ####        ########      #     #   #",
             "#      ########        ####                ####        ########      #     #   #",
             "#      ########        ####                ####        ########      #######   #",
             "################################################################################"
@@ -108,37 +109,38 @@ public class Joc {
 
     public void startGame() {
         this.mazmorra = new Planta[3];
+        this.player.setStatsInicials();
         this.num_planta = 0;
         this.currentState = GameState.EXPLORING;
         this.game_over = false;
 
         ArrayList<Enemic> enemics1 = new ArrayList<>();
-        Enemic e1 = new Enemic(5, 50, 7, 4);
+        Enemic e1 = new Enemic(1, 50, 7, 4);
         enemics1.add(e1);
-        Enemic e2 = new Enemic(5, 50, 59, 4);
+        Enemic e2 = new Enemic(1, 50, 59, 4);
         enemics1.add(e2);
-        Enemic e3 = new Enemic(5, 50, 76, 10);
+        Enemic e3 = new Enemic(50, 50, 76, 10);
         enemics1.add(e3);
 
         ArrayList<Enemic> enemics2 = new ArrayList<>();
-        Enemic e4 = new Enemic(10, 20, 38, 18);
+        Enemic e4 = new Enemic(1, 20, 70, 13);
         enemics2.add(e4);
-        Enemic e5 = new Enemic(10, 20, 4, 7);
+        Enemic e5 = new Enemic(1, 20, 23, 13);
         enemics2.add(e5);
-        Enemic e6 = new Enemic(10, 20, 4, 7);
+        Enemic e6 = new Enemic(1, 20, 21, 3);
         enemics2.add(e6);
 
         ArrayList<Enemic> enemics3 = new ArrayList<>();
-        Enemic e7 = new Enemic(20, 40, 4, 7);
+        Enemic e7 = new Enemic(1, 40, 25, 7);
         enemics3.add(e7);
-        Enemic e8 = new Enemic(10, 20, 4, 7);
+        Enemic e8 = new Enemic(1, 20, 72, 14);
         enemics3.add(e8);
-        Enemic e9 = new Enemic(10, 20, 4, 7);
+        Enemic e9 = new Enemic(1, 20, 3, 19);
         enemics3.add(e9);
 
-        this.mazmorra[0] = new Planta(3, FLOOR1, enemics1);
-        this.mazmorra[1] = new Planta(4, FLOOR2, enemics2);
-        this.mazmorra[2] = new Planta(5, FLOOR3, enemics3);
+        this.mazmorra[0] = new Planta(3, FLOOR1, enemics1, 20, 2);
+        this.mazmorra[1] = new Planta(3, FLOOR2, enemics2, 2, 12);
+        this.mazmorra[2] = new Planta(3, FLOOR3, enemics3, 35, 1);
 
         this.planta_actual = this.mazmorra[0];
         this.player.setInitialPos(38, 19);
@@ -208,9 +210,13 @@ public class Joc {
     }
 
     public void passarPlanta() {
-        this.num_planta++;
-        this.planta_actual = mazmorra[num_planta];
-        this.player.setInitialPos(38, 19);
+        if (this.num_planta != 2) {
+            this.num_planta++;
+            this.planta_actual = mazmorra[num_planta];
+            this.player.setInitialPos(38, 19);
+        } else {
+            currentState = GameState.GAME_WON;
+        }
     }
 
 }

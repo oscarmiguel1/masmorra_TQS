@@ -22,6 +22,7 @@ public class Interface { //clase para dibujar la vista
 
 
     public void dibuixarMazmorra(Screen screen, TextGraphics tg, Jugador j, Planta p) {
+
         tg.setForegroundColor(TextColor.ANSI.WHITE);
         tg.putString(1, 22, "Inventari: [I]");
         tg.putString(60, 22, "Enemics restants: " + p.getEnemiesLeft());
@@ -30,7 +31,8 @@ public class Interface { //clase para dibujar la vista
 
         String[] mazmorra =  p.getFloorLayout();
 
-        tg.setForegroundColor(TextColor.ANSI.RED);
+
+        tg.setForegroundColor(TextColor.ANSI.WHITE_BRIGHT);
         for (int x = 0; x < 80; x++) tg.putString(x, 20, "_");
         for (int y = 0; y < mazmorra.length; y++) {
             String fila = mazmorra[y];
@@ -40,17 +42,17 @@ public class Interface { //clase para dibujar la vista
         }
 
         //Dibujamos puerta
-        tg.setForegroundColor(TextColor.ANSI.WHITE_BRIGHT);
+        tg.setForegroundColor(TextColor.ANSI.GREEN_BRIGHT);
         tg.putString(p.getDoorposX(),p.getDoorposY(),DOOR);
 
         //Dibujamos enemigos
-        tg.setForegroundColor(TextColor.ANSI.WHITE);
+        tg.setForegroundColor(TextColor.ANSI.RED_BRIGHT);
         for (Enemic enemic : p.getEnemies()) {
             tg.putString(enemic.getPos_x(), enemic.getPos_y(), ENEMY);
         }
 
         //Dibujamos Jugador
-        tg.setForegroundColor(TextColor.ANSI.WHITE_BRIGHT);
+        tg.setForegroundColor(TextColor.ANSI.CYAN_BRIGHT);
         tg.putString(j.getPos_x(), j.getPos_y(), PLAYER);
     }
 

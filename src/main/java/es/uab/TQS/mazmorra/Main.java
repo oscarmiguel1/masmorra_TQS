@@ -1,6 +1,8 @@
 package es.uab.TQS.mazmorra;
 
 import es.uab.TQS.mazmorra.model.*;
+import es.uab.TQS.mazmorra.controlador.LoopJoc;
+import es.uab.TQS.mazmorra.vista.Interface;
 
 public class Main {
 
@@ -8,10 +10,10 @@ public class Main {
 
         Jugador player = new Jugador();
         Joc j = new Joc(player);
+        Interface hud = new Interface();
+        LoopJoc controller = new LoopJoc(j, hud);
 
-        j.startGame();
-
-
+        controller.startGame();
 
     }
 

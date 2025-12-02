@@ -97,7 +97,6 @@ public class Joc {
     public Joc(Jugador j) {
         this.player = j;
         this.currentState = GameState.EXPLORING;
-        this.currentState = GameState.EXPLORING;
         this.game_over = false;
         this.itemActual = null;
     }

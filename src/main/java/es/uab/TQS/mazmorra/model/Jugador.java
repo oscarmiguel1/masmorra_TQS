@@ -55,9 +55,13 @@ public class Jugador {
         return this.max_hp;
     }
 
+    public int getExp_necesaria(){ return this.exp_necesaria;}
+
     public int getEXP() {
         return this.exp;
     }
+
+    public int getLv() {return this.lv;}
 
     public ArrayList<Item> getInventari() {
         return this.inventari;
@@ -128,6 +132,10 @@ public class Jugador {
         this.pos_y = y;
     }
 
+    public void setMax_hp(int m){
+        this.max_hp = m;
+    }
+
     public void setHP(int h) {
         if (h >= this.max_hp) {
             this.hp_actual = this.max_hp;
@@ -171,8 +179,8 @@ public class Jugador {
 
     public void lvUP() {
         this.lv++;
-        this.max_hp = this.max_hp + (int) Math.round(this.max_hp * 0.1);
-        this.exp_necesaria = this.exp_necesaria + (int) Math.round(this.exp_necesaria * 0.1);
+        this.max_hp = this.max_hp + (int) Math.round(this.max_hp * 0.4);
+        this.exp_necesaria = this.exp_necesaria + (int) Math.round(this.exp_necesaria * 0.4);
     }
 
 }

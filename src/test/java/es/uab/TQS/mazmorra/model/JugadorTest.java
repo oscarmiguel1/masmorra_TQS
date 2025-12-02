@@ -19,10 +19,13 @@ public class JugadorTest {
         Mockito.when(plantaMock.isValidPosition(1, 0)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(1, 0)).thenReturn(false);
 
+
         j.moveRight(plantaMock, jocMock);
 
-        assertEquals(1, j.getPos_x(), "El jugador s'hauria d'haver mogut a x+1");
-        assertEquals(0, j.getPos_y(), "La coordenada Y no hauria de canviar");
+        assertEquals(1, j.getPos_x());
+        assertEquals(0, j.getPos_y());
+
+        // ------------------------------------------------------------------
 
         j.setInitialPos(0, 0);
         // Hi ha mur (#) no enemic (E)
@@ -31,6 +34,12 @@ public class JugadorTest {
 
         j.moveRight(plantaMock, jocMock);
 
+        assertEquals(0, j.getPos_x());
+        assertEquals(0, j.getPos_y());
+
+        // ------------------------------------------------------------------
+
+
         j.setInitialPos(0, 0);
         // No mur (#) si enemic (E)
         Mockito.when(plantaMock.isValidPosition(1, 0)).thenReturn(true);
@@ -38,8 +47,8 @@ public class JugadorTest {
 
         j.moveRight(plantaMock, jocMock);
 
-        assertEquals(1, j.getPos_x(), "El jugador s'hauria d'haver mogut a x+1");
-        assertEquals(0, j.getPos_y(), "La coordenada Y no hauria de canviar");
+        assertEquals(1, j.getPos_x());
+        assertEquals(0, j.getPos_y());
     }
 
     @Test
@@ -49,8 +58,35 @@ public class JugadorTest {
         Joc jocMock = Mockito.mock(Joc.class);
 
         j.setInitialPos(1, 0);
+        // No hi ha mur (#) ni enemic (E)
         Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(false);
+
+
+        j.moveLeft(plantaMock, jocMock);
+
+        assertEquals(0, j.getPos_x());
+        assertEquals(0, j.getPos_y());
+
+        // ------------------------------------------------------------------
+
+        j.setInitialPos(1, 0);
+        // Hi ha mur (#) no enemic (E)
+        Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(false);
+        Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(false);
+
+        j.moveLeft(plantaMock, jocMock);
+
+        assertEquals(1, j.getPos_x());
+        assertEquals(0, j.getPos_y());
+
+        // ------------------------------------------------------------------
+
+
+        j.setInitialPos(1, 0);
+        // No mur (#) si enemic (E)
+        Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(true);
+        Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(true);
 
         j.moveLeft(plantaMock, jocMock);
 
@@ -65,8 +101,35 @@ public class JugadorTest {
         Joc jocMock = Mockito.mock(Joc.class);
 
         j.setInitialPos(0, 1);
+        // No hi ha mur (#) ni enemic (E)
         Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(false);
+
+
+        j.moveUp(plantaMock, jocMock);
+
+        assertEquals(0, j.getPos_x());
+        assertEquals(0, j.getPos_y());
+
+        // ------------------------------------------------------------------
+
+        j.setInitialPos(0, 1);
+        // Hi ha mur (#) no enemic (E)
+        Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(false);
+        Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(false);
+
+        j.moveUp(plantaMock, jocMock);
+
+        assertEquals(0, j.getPos_x());
+        assertEquals(1, j.getPos_y());
+
+        // ------------------------------------------------------------------
+
+
+        j.setInitialPos(0, 1);
+        // No mur (#) si enemic (E)
+        Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(true);
+        Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(true);
 
         j.moveUp(plantaMock, jocMock);
 
@@ -81,8 +144,35 @@ public class JugadorTest {
         Joc jocMock = Mockito.mock(Joc.class);
 
         j.setInitialPos(0, 0);
+        // No hi ha mur (#) ni enemic (E)
         Mockito.when(plantaMock.isValidPosition(0, 1)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(0, 1)).thenReturn(false);
+
+
+        j.moveDown(plantaMock, jocMock);
+
+        assertEquals(0, j.getPos_x());
+        assertEquals(1, j.getPos_y());
+
+        // ------------------------------------------------------------------
+
+        j.setInitialPos(0, 0);
+        // Hi ha mur (#) no enemic (E)
+        Mockito.when(plantaMock.isValidPosition(0, 1)).thenReturn(false);
+        Mockito.when(plantaMock.isEnemyPosition(0, 1)).thenReturn(false);
+
+        j.moveDown(plantaMock, jocMock);
+
+        assertEquals(0, j.getPos_x());
+        assertEquals(0, j.getPos_y());
+
+        // ------------------------------------------------------------------
+
+
+        j.setInitialPos(0, 0);
+        // No mur (#) si enemic (E)
+        Mockito.when(plantaMock.isValidPosition(0, 1)).thenReturn(true);
+        Mockito.when(plantaMock.isEnemyPosition(0, 1)).thenReturn(true);
 
         j.moveDown(plantaMock, jocMock);
 

@@ -212,8 +212,8 @@ public class JugadorTest {
         j = new Jugador();
 
         //al sobrepasar l'exp necessaria, hauria d'ajustar-se al maxim
-        j.setEXP(44);
-        assertEquals(44, j.getEXP());
+        j.setEXP(150);
+        assertEquals(0, j.getEXP());
     }
 
     @Test

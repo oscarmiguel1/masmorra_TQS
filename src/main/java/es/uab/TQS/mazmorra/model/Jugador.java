@@ -1,186 +1,186 @@
-//Jugador
 package es.uab.TQS.mazmorra.model;
 
-import com.googlecode.lanterna.screen.Screen;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Jugador {
 
-    private int pos_x;
-    private int pos_y;
+  private int posX;
+  private int posY;
 
-    private final ArrayList<Item> inventari;
+  private final ArrayList<Item> inventari;
 
-    private int hp_actual;
-    private int max_hp;
+  private int hpActual;
+  private int maxHp;
 
-    private int exp;
-    private int exp_necesaria;
-    private int lv;
+  private int exp;
+  private int expNecesaria;
+  private int lv;
 
-    public Jugador() {
-        this.pos_x = 0;
-        this.pos_y = 0;
-        this.setStatsInicials();
-        this.inventari = new ArrayList<>();
+  public Jugador() {
+    this.posX = 0;
+    this.posY = 0;
+    this.setStatsInicials();
+    this.inventari = new ArrayList<>();
+  }
+
+  public void setStatsInicials() {
+    this.maxHp = 20;
+    this.hpActual = this.maxHp;
+    this.exp = 0;
+    this.expNecesaria = 100;
+    this.lv = 1;
+  }
+
+  public int getLvl() {
+    return this.lv;
+  }
+
+  public int getPos_x() {
+    return this.posX;
+  }
+
+  public int getPos_y() {
+    return this.posY;
+  }
+
+  public int getHP() {
+    return this.hpActual;
+  }
+
+  public int getMax_hp() {
+    return this.maxHp;
+  }
+
+  public int getExp_necesaria() {
+    return this.expNecesaria;
+  }
+
+  public int getEXP() {
+    return this.exp;
+  }
+
+  public int getLv() {
+    return this.lv;
+  }
+
+  public ArrayList<Item> getInventari() {
+    return this.inventari;
+  }
+
+  public void addItem(Item i) {
+    this.inventari.add(i);
+  }
+
+  public void moveRight(Planta p, Joc j) {
+    int newX = posX + 1; // movimiento provisional
+    int newY = posY;
+
+    if (p.isValidPosition(newX, newY)) {
+      if (p.isEnemyPosition(newX, newY)) {
+        posX = newX;
+        j.battle(posX, posY);
+      } else {
+        posX = newX;
+      } // solo movemos si es válido
+    }
+  }
+
+  public void moveLeft(Planta p, Joc j) {
+    int newX = posX - 1;
+    int newY = posY;
+
+    if (p.isValidPosition(newX, newY)) {
+      if (p.isEnemyPosition(newX, newY)) {
+        posX = newX;
+        j.battle(posX, posY);
+      } else {
+        posX = newX;
+      } // solo movemos si es válido
+    }
+  }
+
+  public void moveUp(Planta p, Joc j) {
+    int newX = posX;
+    int newY = posY - 1;
+
+    if (p.isValidPosition(newX, newY)) {
+      if (p.isEnemyPosition(newX, newY)) {
+        posY = newY;
+        j.battle(posX, posY);
+      } else {
+        posY = newY;
+      } // solo movemos si es válido
+    }
+  }
+
+  public void moveDown(Planta p, Joc j) {
+    int newX = posX;
+    int newY = posY + 1;
+
+    if (p.isValidPosition(newX, newY)) {
+      if (p.isEnemyPosition(newX, newY)) {
+        posY = newY;
+        j.battle(posX, posY);
+      } else {
+        posY = newY;
+      } // solo movemos si es válido
+    }
+  }
+
+  public void setInitialPos(int x, int y) {
+    this.posX = x;
+    this.posY = y;
+  }
+
+  public void setMax_hp(int m) {
+    this.maxHp = m;
+  }
+
+  public void setHP(int h) {
+    if (h >= this.maxHp) {
+      this.hpActual = this.maxHp;
+    } else {
+      if (h < 0) {
+        this.hpActual = 0;
+      } else {
+        this.hpActual = h;
+      }
     }
 
-    public void setStatsInicials() {
-        this.max_hp = 20;
-        this.hp_actual = this.max_hp;
+  }
+
+  public void openDoor(Planta p) {
+    if (p.getPlayerTile(this.posX, this.posY) == 'M') {
+      p.openDoor();
+    }
+  }
+
+  public void setEXP(int e) {
+    // this.exp = e;
+    if (e >= this.expNecesaria) {
+      this.exp = 0;
+      lvUP();
+    } else {
+      if (e < 0) {
         this.exp = 0;
-        this.exp_necesaria = 100;
-        this.lv = 1;
+      } else {
+        this.exp = e;
+      }
     }
+  }
 
-    public int getLvl() {
-        return this.lv;
+  public boolean isPlayerAtDoor(Planta p) {
+    if (p.getDoorposX() == this.posX && p.getDoorposY() == this.posY) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    public int getPos_x() {
-        return this.pos_x;
-    }
-
-    public int getPos_y() {
-        return this.pos_y;
-    }
-
-    public int getHP() {
-        return this.hp_actual;
-    }
-
-    public int getMax_hp() {
-        return this.max_hp;
-    }
-
-    public int getExp_necesaria(){ return this.exp_necesaria;}
-
-    public int getEXP() {
-        return this.exp;
-    }
-
-    public int getLv() {return this.lv;}
-
-    public ArrayList<Item> getInventari() {
-        return this.inventari;
-    }
-
-    public void addItem(Item i) {
-        this.inventari.add(i);
-    }
-
-    public void moveRight(Planta p, Joc j) {
-        int newX = pos_x + 1; // movimiento provisional
-        int newY = pos_y;
-
-        if (p.isValidPosition(newX, newY)) {
-            if (p.isEnemyPosition(newX, newY)) {
-                pos_x = newX;
-                j.battle(pos_x, pos_y);
-            } else {
-                pos_x = newX;
-            } // solo movemos si es válido
-        }
-    }
-
-    public void moveLeft(Planta p, Joc j) {
-        int newX = pos_x - 1;
-        int newY = pos_y;
-
-        if (p.isValidPosition(newX, newY)) {
-            if (p.isEnemyPosition(newX, newY)) {
-                pos_x = newX;
-                j.battle(pos_x, pos_y);
-            } else {
-                pos_x = newX;
-            } // solo movemos si es válido
-        }
-    }
-
-    public void moveUp(Planta p, Joc j) {
-        int newX = pos_x;
-        int newY = pos_y - 1;
-
-        if (p.isValidPosition(newX, newY)) {
-            if (p.isEnemyPosition(newX, newY)) {
-                pos_y = newY;
-                j.battle(pos_x, pos_y);
-            } else {
-                pos_y = newY;
-            } // solo movemos si es válido
-        }
-    }
-
-    public void moveDown(Planta p, Joc j) {
-        int newX = pos_x;
-        int newY = pos_y + 1;
-
-        if (p.isValidPosition(newX, newY)) {
-            if (p.isEnemyPosition(newX, newY)) {
-                pos_y = newY;
-                j.battle(pos_x, pos_y);
-            } else {
-                pos_y = newY;
-            } // solo movemos si es válido
-        }
-    }
-
-    public void setInitialPos(int x, int y) {
-        this.pos_x = x;
-        this.pos_y = y;
-    }
-
-    public void setMax_hp(int m){
-        this.max_hp = m;
-    }
-
-    public void setHP(int h) {
-        if (h >= this.max_hp) {
-            this.hp_actual = this.max_hp;
-        } else {
-            if (h < 0) {
-                this.hp_actual = 0;
-            } else {
-                this.hp_actual = h;
-            }
-        }
-
-    }
-
-    public void openDoor(Planta p) {
-        if (p.getPlayerTile(this.pos_x, this.pos_y) == 'M') {
-            p.openDoor();
-        }
-    }
-
-    public void setEXP(int e) {
-        // this.exp = e;
-        if (e >= this.exp_necesaria) {
-            this.exp = 0;
-            lvUP();
-        } else {
-            if (e < 0) {
-                this.exp = 0;
-            } else {
-                this.exp = e;
-            }
-        }
-    }
-
-    public boolean isPlayerAtDoor(Planta p) {
-        if (p.getDoorposX() == this.pos_x && p.getDoorposY() == this.pos_y) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void lvUP() {
-        this.lv++;
-        this.max_hp = this.max_hp + (int) Math.round(this.max_hp * 0.4);
-        this.exp_necesaria = this.exp_necesaria + (int) Math.round(this.exp_necesaria * 0.4);
-    }
+  public void lvUP() {
+    this.lv++;
+    this.maxHp = this.maxHp + (int) Math.round(this.maxHp * 0.4);
+    this.expNecesaria = this.expNecesaria + (int) Math.round(this.expNecesaria * 0.4);
+  }
 
 }

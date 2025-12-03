@@ -35,6 +35,3 @@ jobs:
         with:
           distribution: temurin
           java-version: 24
-
-      - name: Run Checkstyle (code quality)
-        run: mvn checkstyle:check

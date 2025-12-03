@@ -55,7 +55,6 @@ public class PlantaTest {
         //Enemic trobat
         Enemic result = planta.getEnemy(5, 7);
 
-
         assertEquals(enemic1, result);
 
         //Enemic no trobat
@@ -195,7 +194,6 @@ public class PlantaTest {
         assertFalse(p2.isDoorPosition(-20,-20));
         assertFalse(p2.isDoorPosition(5,15));
 
-
     }
 
     @Test
@@ -269,7 +267,6 @@ public class PlantaTest {
         assertEquals(0,p.getEnemiesLeft());
         assertEquals(0,p.getEnemies().size());
         assertEquals(p.getEnemies().size(),p.getEnemiesLeft());
-
 
         //Cas: elminiacio seguida
 

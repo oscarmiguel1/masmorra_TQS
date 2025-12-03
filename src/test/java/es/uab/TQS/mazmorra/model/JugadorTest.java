@@ -19,7 +19,6 @@ public class JugadorTest {
         Mockito.when(plantaMock.isValidPosition(1, 0)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(1, 0)).thenReturn(false);
 
-
         j.moveRight(plantaMock, jocMock);
 
         assertEquals(1, j.getPos_x());
@@ -38,7 +37,6 @@ public class JugadorTest {
         assertEquals(0, j.getPos_y());
 
         // ------------------------------------------------------------------
-
 
         j.setInitialPos(0, 0);
         // No mur (#) si enemic (E)
@@ -62,7 +60,6 @@ public class JugadorTest {
         Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(false);
 
-
         j.moveLeft(plantaMock, jocMock);
 
         assertEquals(0, j.getPos_x());
@@ -81,7 +78,6 @@ public class JugadorTest {
         assertEquals(0, j.getPos_y());
 
         // ------------------------------------------------------------------
-
 
         j.setInitialPos(1, 0);
         // No mur (#) si enemic (E)
@@ -105,7 +101,6 @@ public class JugadorTest {
         Mockito.when(plantaMock.isValidPosition(0, 0)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(0, 0)).thenReturn(false);
 
-
         j.moveUp(plantaMock, jocMock);
 
         assertEquals(0, j.getPos_x());
@@ -124,7 +119,6 @@ public class JugadorTest {
         assertEquals(1, j.getPos_y());
 
         // ------------------------------------------------------------------
-
 
         j.setInitialPos(0, 1);
         // No mur (#) si enemic (E)
@@ -148,7 +142,6 @@ public class JugadorTest {
         Mockito.when(plantaMock.isValidPosition(0, 1)).thenReturn(true);
         Mockito.when(plantaMock.isEnemyPosition(0, 1)).thenReturn(false);
 
-
         j.moveDown(plantaMock, jocMock);
 
         assertEquals(0, j.getPos_x());
@@ -167,7 +160,6 @@ public class JugadorTest {
         assertEquals(0, j.getPos_y());
 
         // ------------------------------------------------------------------
-
 
         j.setInitialPos(0, 0);
         // No mur (#) si enemic (E)
@@ -198,16 +190,13 @@ public class JugadorTest {
     void testSetEXP() {
         Jugador j = new Jugador();
 
-
         //no hauria d'acceptar valors negatius
         j.setEXP(-3);
         assertEquals(0, j.getEXP());
 
-
         //setjament habitual
         j.setEXP(12);
         assertEquals(12, j.getEXP());
-
 
         j = new Jugador();
 
@@ -269,7 +258,6 @@ public class JugadorTest {
         j.lvUP();
 
         assertTrue(j.getMax_hp() > HPinicial);
-
 
     }
 

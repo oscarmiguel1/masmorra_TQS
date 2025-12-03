@@ -1,36 +1,42 @@
-<?xml version="1.0"?>
-<!DOCTYPE module PUBLIC
-          "-//Checkstyle//DTD Checkstyle Configuration 9.3//EN"
-          "https://checkstyle.org/dtds/configuration_9_3.dtd">
+name: Verificar espaciado entre líneas
 
-<module name="Checker">
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
 
-    <!-- Regla de longitud de línea elevada -->
-    <module name="LineLength">
-        <property name="max" value="200"/>
-        <property name="ignorePattern" value="^package.*|^import.*"/>
-    </module>
-
-    <!-- Evitar espacios al final de la línea -->
-    <module name="TrailingWhitespace"/>
-
-    <!-- Reglas de estilo básicas -->
-    <module name="TreeWalker">
-
-        <!-- Nombrado estándar -->
-        <module name="LocalVariableName"/>
-        <module name="MemberName"/>
-        <module name="MethodName"/>
-
-        <!-- Sangrado básico -->
-        <module name="Indentation">
-            <property name="basicOffset" value="4"/>
-            <property name="braceAdjustment" value="0"/>
-            <property name="caseIndent" value="4"/>
-        </module>
-
-        <!-- Prohibir imports que no se usan -->
-        <module name="UnusedImports"/>
-    </module>
-
-</module>
+jobs:
+  check-line-spacing:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+      
+      - name: Verificar espaciado máximo de 1 línea
+        run: |
+          echo "Verificando espaciado entre líneas..."
+          
+          # Buscar archivos con más de una línea en blanco consecutiva
+          files_with_issues=$(find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.java" -o -name "*.cpp" -o -name "*.c" -o -name "*.go" -o -name "*.rb" -o -name "*.php" \) -not -path "*/node_modules/*" -not -path "*/.git/*" -not -path "*/venv/*" -not -path "*/dist/*" -not -path "*/build/*")
+          
+          errors_found=0
+          
+          for file in $files_with_issues; do
+            # Buscar dos o más líneas en blanco consecutivas
+            if grep -Pzo '\n\n\n' "$file" > /dev/null 2>&1; then
+              echo "❌ ERROR en $file: Se encontraron más de una línea en blanco consecutiva"
+              echo "   Líneas problemáticas:"
+              grep -n '^$' "$file" | awk 'NR>1 && $1==p+1 && $1==pp+2 {print "   Línea " pp ", " p ", " $1} {pp=p; p=$1}'
+              errors_found=1
+            fi
+          done
+          
+          if [ $errors_found -eq 1 ]; then
+            echo ""
+            echo "💡 Por favor, elimina las líneas en blanco adicionales. El máximo permitido es 1 línea en blanco entre código."
+            exit 1
+          else
+            echo "✅ Todas las verificaciones pasaron correctamente"
+          fi

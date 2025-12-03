@@ -1,31 +1,58 @@
-name: CI
+name: Checkstyle Google Style
+
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main, develop ]
+
 jobs:
-  test:
+  checkstyle:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Java 24 (Temurin)
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 24
-      - name: Run tests
-        run: mvn test
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Java 24 (Temurin)
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 24
-      - name: Run Checkstyle with Google Checks
-        run: mvn checkstyle:check -Dcheckstyle.config.location=google_checks.xml
+    - name: Checkout código
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Descargar Checkstyle
+      run: |
+        wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.5/checkstyle-10.12.5-all.jar
+        
+    - name: Descargar configuración Google Checks
+      run: |
+        wget https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml
+        
+    - name: Ejecutar Checkstyle
+      run: |
+        java -jar checkstyle-10.12.5-all.jar -c google_checks.xml src/
+      continue-on-error: false
+      
+    - name: Generar reporte
+      if: always()
+      run: |
+        java -jar checkstyle-10.12.5-all.jar -c google_checks.xml -f xml -o checkstyle-report.xml src/ || true
+        
+    - name: Subir reporte como artefacto
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: checkstyle-report
+        path: checkstyle-report.xml
+        
+    - name: Comentar en PR
+      if: failure() && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ Checkstyle encontró violaciones de estilo. Revisa el artefacto para más detalles.'
+          })

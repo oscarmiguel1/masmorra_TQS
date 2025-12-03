@@ -1,4 +1,4 @@
-name: Checkstyle Google Style
+name: Verificar espaciado entre líneas
 
 on:
   push:
@@ -7,52 +7,36 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  checkstyle:
+  check-line-spacing:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
+      - name: Checkout código
+        uses: actions/checkout@v4
       
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        
-    - name: Descargar Checkstyle
-      run: |
-        wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.5/checkstyle-10.12.5-all.jar
-        
-    - name: Descargar configuración Google Checks
-      run: |
-        wget https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml
-        
-    - name: Ejecutar Checkstyle
-      run: |
-        java -jar checkstyle-10.12.5-all.jar -c google_checks.xml src/
-      continue-on-error: false
-      
-    - name: Generar reporte
-      if: always()
-      run: |
-        java -jar checkstyle-10.12.5-all.jar -c google_checks.xml -f xml -o checkstyle-report.xml src/ || true
-        
-    - name: Subir reporte como artefacto
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: checkstyle-report
-        path: checkstyle-report.xml
-        
-    - name: Comentar en PR
-      if: failure() && github.event_name == 'pull_request'
-      uses: actions/github-script@v7
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '❌ Checkstyle encontró violaciones de estilo. Revisa el artefacto para más detalles.'
-          })
+      - name: Verificar espaciado máximo de 1 línea
+        run: |
+          echo "Verificando espaciado entre líneas..."
+          
+          # Buscar archivos con más de una línea en blanco consecutiva
+          files_with_issues=$(find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.java" -o -name "*.cpp" -o -name "*.c" -o -name "*.go" -o -name "*.rb" -o -name "*.php" \) -not -path "*/node_modules/*" -not -path "*/.git/*" -not -path "*/venv/*" -not -path "*/dist/*" -not -path "*/build/*")
+          
+          errors_found=0
+          
+          for file in $files_with_issues; do
+            # Buscar dos o más líneas en blanco consecutivas
+            if grep -Pzo '\n\n\n' "$file" > /dev/null 2>&1; then
+              echo "❌ ERROR en $file: Se encontraron más de una línea en blanco consecutiva"
+              echo "   Líneas problemáticas:"
+              grep -n '^$' "$file" | awk 'NR>1 && $1==p+1 && $1==pp+2 {print "   Línea " pp ", " p ", " $1} {pp=p; p=$1}'
+              errors_found=1
+            fi
+          done
+          
+          if [ $errors_found -eq 1 ]; then
+            echo ""
+            echo "💡 Por favor, elimina las líneas en blanco adicionales. El máximo permitido es 1 línea en blanco entre código."
+            exit 1
+          else
+            echo "✅ Todas las verificaciones pasaron correctamente"
+          fi

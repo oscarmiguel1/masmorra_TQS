@@ -129,7 +129,6 @@ public class PlantaTest {
 
         //Limits exteriors: (0,22)
         assertFalse(planta.isValidPosition(0,22));
-
     }
 
     @Test
@@ -191,7 +190,6 @@ public class PlantaTest {
         assertTrue(p2.isDoorPosition(-50,-50));
         assertFalse(p2.isDoorPosition(-20,-20));
         assertFalse(p2.isDoorPosition(5,15));
-
     }
 
     @Test
@@ -267,7 +265,6 @@ public class PlantaTest {
         assertEquals(p.getEnemies().size(),p.getEnemiesLeft());
 
         //Cas: elminiacio seguida
-
         Planta p2 =new Planta(3,null,enemicsMock,20,20);
 
         p.enemyDefeated(2,1);
@@ -276,9 +273,4 @@ public class PlantaTest {
 
         assertEquals(p.getEnemiesLeft(),p.getEnemies().size());
     }
-
 }
-
-
-
-

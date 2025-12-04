@@ -84,8 +84,7 @@ public class Joc {
       "################################################################################"
   };
 
-  long infoMessageEndTime = 0;
-
+  private long infoMsgFi = 0;
   private final Jugador player;
   private Planta[] mazmorra;
   private Planta plantaActual;
@@ -103,7 +102,7 @@ public class Joc {
 
   public void missatgeTemporal(long duracionMs) {
     currentState = GameState.INFO;
-    infoMessageEndTime = System.currentTimeMillis() + duracionMs;
+    infoMsgFi = System.currentTimeMillis() + duracionMs;
   }
 
   public void startGame() {
@@ -114,27 +113,27 @@ public class Joc {
     this.gameOver = false;
 
     ArrayList<Enemic> enemics1 = new ArrayList<>();
-    Enemic e1 = new Enemic(1, 50, 7, 4);
+    Enemic e1 = new Enemic(5, 50, 7, 4);
     enemics1.add(e1);
-    Enemic e2 = new Enemic(1, 50, 59, 4);
+    Enemic e2 = new Enemic(5, 50, 59, 4);
     enemics1.add(e2);
-    Enemic e3 = new Enemic(50, 50, 76, 10);
+    Enemic e3 = new Enemic(10, 50, 76, 10);
     enemics1.add(e3);
 
     ArrayList<Enemic> enemics2 = new ArrayList<>();
-    Enemic e4 = new Enemic(1, 20, 70, 13);
+    Enemic e4 = new Enemic(6, 20, 70, 13);
     enemics2.add(e4);
-    Enemic e5 = new Enemic(1, 20, 23, 13);
+    Enemic e5 = new Enemic(8, 20, 23, 13);
     enemics2.add(e5);
-    Enemic e6 = new Enemic(1, 20, 21, 3);
+    Enemic e6 = new Enemic(10, 20, 21, 3);
     enemics2.add(e6);
 
     ArrayList<Enemic> enemics3 = new ArrayList<>();
-    Enemic e7 = new Enemic(1, 40, 25, 7);
+    Enemic e7 = new Enemic(10, 40, 25, 7);
     enemics3.add(e7);
-    Enemic e8 = new Enemic(1, 20, 72, 14);
+    Enemic e8 = new Enemic(5, 20, 72, 14);
     enemics3.add(e8);
-    Enemic e9 = new Enemic(1, 20, 3, 19);
+    Enemic e9 = new Enemic(8, 20, 3, 19);
     enemics3.add(e9);
 
     this.mazmorra[0] = new Planta(3, FLOOR1, enemics1, 20, 2);
@@ -161,8 +160,28 @@ public class Joc {
     return itemActual;
   }
 
+  public long getInfoMsgFi() {
+    return infoMsgFi;
+  }
+
+  public Planta[] getMazmorra() {
+    return this.mazmorra;
+  }
+
+  public int getNumPlanta() {
+    return this.numPlanta;
+  }
+
+  public boolean getGameOver() {
+    return this.gameOver;
+  }
+
+  public void setNumPlanta(int x) {
+    this.numPlanta = x;
+  }
+
   public void checkInfoMessageDuration() {
-    if (currentState == GameState.INFO && System.currentTimeMillis() > infoMessageEndTime) {
+    if (currentState == GameState.INFO && System.currentTimeMillis() > infoMsgFi) {
       currentState = GameState.EXPLORING;
       this.itemActual = null;
     }
@@ -190,7 +209,7 @@ public class Joc {
       this.player.setEXP(pexp);
       this.plantaActual.enemyDefeated(x, y);
 
-      if (Math.random() < 0.25) {
+      if (Math.random() < 0.4) {
         this.itemActual = new Pocion(this.player);
         giveItem(itemActual);
         missatgeTemporal(1000);

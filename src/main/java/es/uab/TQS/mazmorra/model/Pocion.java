@@ -21,6 +21,6 @@ public class Pocion implements Item {
 
   @Override
   public void usarItem() {
-    this.poseedor.setHP(cura);
+    this.poseedor.setHP(this.poseedor.getHP() + cura);
   }
 }

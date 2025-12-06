@@ -3,7 +3,6 @@ package es.uab.TQS.mazmorra.model;
 import static es.uab.TQS.mazmorra.model.Joc.GameState.INFO;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -115,7 +114,6 @@ public class JocTest {
     when(p4.getInventari().getLast()).thenReturn(c);
 
     assertInstanceOf(Llave.class,p4.getInventari().getLast());
-
 
     // Cas normal: comprovació de que l'enemic s'elimina
     Jugador p5 = mock(Jugador.class);

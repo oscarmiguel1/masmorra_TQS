@@ -1,9 +1,0 @@
-{
-  "java.test.config": {
-    "vmArgs": [
-      "-Dnet.bytebuddy.experimental=true"
-    ]
-  },
-  "java.configuration.updateBuildConfiguration": "interactive",
-  "java.debug.settings.onBuildFailureProceed": true
-}

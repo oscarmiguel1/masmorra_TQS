@@ -153,7 +153,6 @@ public class Joc { //Classe principal on s'inicialitza tot el joc i es gestionen
     this.plantaActual = this.mazmorra[0];
     this.player.setInitialPos(38, 19);
     giveItem(new Pocion(player,10));
-    giveItem(new Bomba(player));
   }
 
   public Jugador getPlayer() {

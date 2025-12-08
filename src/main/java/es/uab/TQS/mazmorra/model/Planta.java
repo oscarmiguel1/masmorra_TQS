@@ -2,7 +2,7 @@ package es.uab.TQS.mazmorra.model;
 
 import java.util.ArrayList;
 
-public class Planta {
+public class Planta { //Aquesta classe gestiona la logica de l'estructura de les plantes, enemics i la porta per avancar
 
   private final int doorPosX;
   private final int doorPosY;
@@ -58,7 +58,7 @@ public class Planta {
   }
 
   public boolean isValidPosition(int x, int y) { //comprovem que la posicio es valida per al jugador: es troba dins dels limits i no vol anar a un mur
-    int limX = 79;
+    int limX = 79; //limits predeterminats del joc
     int limY = 19;
     return x >= 0 && x <= limX
             && y >= 0
@@ -90,7 +90,7 @@ public class Planta {
     if (this.enemiesLeft - 1 >= 0) {
       this.enemiesLeft--;
       for (int i = 0; i < this.enemics.size(); i++) {
-        if (this.enemics.get(i).getPos_x() == x && this.enemics.get(i).getPos_y() == y) {
+        if (this.enemics.get(i).getPos_x() == x && this.enemics.get(i).getPos_y() == y) { //eliminem l'enemic concret de la posicio
           this.enemics.remove(i);
         }
       }

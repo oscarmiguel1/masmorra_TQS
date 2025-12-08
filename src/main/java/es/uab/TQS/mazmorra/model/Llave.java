@@ -1,6 +1,6 @@
 package es.uab.TQS.mazmorra.model;
 
-public class Llave implements Item {
+public class Llave implements Item { //Obre la porta de cada planta
 
   private Jugador poseedor;
 

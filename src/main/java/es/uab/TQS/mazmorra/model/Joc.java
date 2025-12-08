@@ -113,6 +113,7 @@ public class Joc { //Classe principal on s'inicialitza tot el joc i es gestionen
     this.currentState = GameState.EXPLORING;
     this.gameOver = false;
 
+    //establiment dels enmics i plantes de la masmorra
     ArrayList<Enemic> enemics1 = new ArrayList<>();
     Enemic e1 = new Enemic(5, 50, 7, 4);
     enemics1.add(e1);
@@ -215,7 +216,7 @@ public class Joc { //Classe principal on s'inicialitza tot el joc i es gestionen
   public void boom(){ //elimina els enemics corresponents de manera aleatoria i comprova si queden restants per donar la clau
     ArrayList<Enemic> enemics = this.plantaActual.getEnemies();
 
-    if(enemics.isEmpty()) return;
+    if(enemics.isEmpty()) return; //si no queda cap enemic, la bomba no fa res
 
     int enemicsAeliminar = Math.min(1 + (int)(Math.random() * 3), enemics.size());
     for (int i = 0; i < enemicsAeliminar; i++) {
@@ -223,7 +224,7 @@ public class Joc { //Classe principal on s'inicialitza tot el joc i es gestionen
       enemics.remove(idx);
     }
     this.plantaActual.setEnemiesLeft(enemics.size());
-    if(this.plantaActual.getEnemiesLeft() == 0){
+    if(this.plantaActual.getEnemiesLeft() == 0){ //si eliminem els ultims, rebem clau
       this.itemActual = new Llave(this.player);
       giveItem(itemActual);
       missatgeTemporal(1000);

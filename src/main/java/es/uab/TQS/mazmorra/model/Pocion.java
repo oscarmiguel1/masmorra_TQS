@@ -1,6 +1,6 @@
 package es.uab.TQS.mazmorra.model;
 
-public class Pocion implements Item {
+public class Pocion implements Item { //Cura segons la planta on es troba el jugador
   private int cura;
 
   private Jugador poseedor;

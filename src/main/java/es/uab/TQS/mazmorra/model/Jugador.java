@@ -95,7 +95,7 @@ public class Jugador { //classe per tota la logica relacionada al jugador, stats
         j.battle(posX, posY);
       } else {
         posX = newX;
-      } // solo movemos si es válido
+      } // nomes movem si es valid
     }
   }
 
@@ -109,7 +109,7 @@ public class Jugador { //classe per tota la logica relacionada al jugador, stats
         j.battle(posX, posY);
       } else {
         posY = newY;
-      } // solo movemos si es válido
+      } // nomes movem si es valid
     }
   }
 
@@ -123,7 +123,7 @@ public class Jugador { //classe per tota la logica relacionada al jugador, stats
         j.battle(posX, posY);
       } else {
         posY = newY;
-      } // solo movemos si es válido
+      } // nomes movem si es valid
     }
   }
 

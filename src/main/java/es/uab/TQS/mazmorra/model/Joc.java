@@ -229,7 +229,6 @@ public class Joc { //Classe principal on s'inicialitza tot el joc i es gestionen
       giveItem(itemActual);
       missatgeTemporal(1000);
     }
-
   }
 
   public void battle(int x, int y) { //resta al jugador l'atk de l'enemic i comprova si perd la batalla o si guanya. al guanyar, rep diferents items
@@ -266,7 +265,6 @@ public class Joc { //Classe principal on s'inicialitza tot el joc i es gestionen
         giveItem(itemActual);
         missatgeTemporal(1000);
       }
-
 
       if (this.plantaActual.getEnemiesLeft() == 0) {
         this.itemActual = new Llave(this.player);

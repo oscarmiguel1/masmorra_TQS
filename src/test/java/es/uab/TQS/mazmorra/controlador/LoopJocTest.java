@@ -69,8 +69,17 @@ class LoopJocTest {
         verify(joc, times(1)).toggleInventory();
         assertEquals(0, idx[0]); // El índice se resetea a 0
 
+
         //Cas normal: Navegació per l'inventari
         when(joc.getCurrentState()).thenReturn(Joc.GameState.INVENTORY);
+
+        //Cas: polsar dreta
+        processarTecles(keyRight, joc, idx);
+        assertEquals(0, idx[0]);
+
+        //Cas: polsar left
+        processarTecles(keyLeft, joc, idx);
+        assertEquals(0, idx[0]);
 
         // Navegar cap avall
         processarTecles(keyDown, joc, idx);

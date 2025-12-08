@@ -2,7 +2,7 @@ package es.uab.TQS.mazmorra.model;
 
 import java.util.ArrayList;
 
-public class Jugador {
+public class Jugador { //classe per tota la logica relacionada al jugador, stats i posicio
 
   private int posX;
   private int posY;
@@ -71,8 +71,8 @@ public class Jugador {
     this.inventari.add(i);
   }
 
-  public void moveRight(Planta p, Joc j) {
-    int newX = posX + 1; // movimiento provisional
+  public void moveRight(Planta p, Joc j) { //movem si la posicio es valida i si nhi ha un enemic iniciem batalla
+    int newX = posX + 1; // moviment provisional
     int newY = posY;
 
     if (p.isValidPosition(newX, newY)) {
@@ -81,7 +81,7 @@ public class Jugador {
         j.battle(posX, posY);
       } else {
         posX = newX;
-      } // solo movemos si es válido
+      } // nomes movem si es valid
     }
   }
 
@@ -137,11 +137,11 @@ public class Jugador {
   }
 
   public void setHP(int h) {
-    if (h >= this.maxHp) {
+    if (h >= this.maxHp) {  //cal assegurar que no sobrepassem el maxim de salut
       this.hpActual = this.maxHp;
     } else {
       if (h < 0) {
-        this.hpActual = 0;
+        this.hpActual = 0; //limit inferior 0
       } else {
         this.hpActual = h;
       }
@@ -156,7 +156,7 @@ public class Jugador {
   }
 
   public void setEXP(int e) {
-    if (e >= this.expNecesaria) {
+    if (e >= this.expNecesaria) { //cal assegurar que no sobrepassem l'experiencia necessaria
       this.exp = 0;
       lvUP();
     } else {
@@ -176,7 +176,7 @@ public class Jugador {
     }
   }
 
-  public void lvUP() {
+  public void lvUP() { //incrementem maxHp i expNecesaria en un 40% i curem un 20% al jugador
     this.lv++;
     this.maxHp = this.maxHp + (int) Math.round(this.maxHp * 0.4);
     this.hpActual = this.hpActual + (int) Math.round(this.hpActual * 0.2);

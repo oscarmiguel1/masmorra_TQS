@@ -1,10 +1,9 @@
 package es.uab.TQS.mazmorra.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JugadorTest {
 
@@ -208,11 +207,28 @@ public class JugadorTest {
         Jugador j = new Jugador();
         Planta plantaMock = Mockito.mock(Planta.class);
 
+        //Condition coverage: comprovem les combinacions de condicions
         j.setInitialPos(0, 0);
         Mockito.when(plantaMock.getDoorposX()).thenReturn(0);
         Mockito.when(plantaMock.getDoorposY()).thenReturn(0);
 
         assertTrue(j.isPlayerAtDoor(plantaMock));
+
+        Mockito.when(plantaMock.getDoorposX()).thenReturn(5);
+        Mockito.when(plantaMock.getDoorposY()).thenReturn(5);
+
+        assertFalse(j.isPlayerAtDoor(plantaMock));
+
+        Mockito.when(plantaMock.getDoorposX()).thenReturn(0);
+        Mockito.when(plantaMock.getDoorposY()).thenReturn(5);
+
+        assertFalse(j.isPlayerAtDoor(plantaMock));
+
+        Mockito.when(plantaMock.getDoorposX()).thenReturn(5);
+        Mockito.when(plantaMock.getDoorposY()).thenReturn(0);
+
+        assertFalse(j.isPlayerAtDoor(plantaMock));
+
     }
 
     @Test

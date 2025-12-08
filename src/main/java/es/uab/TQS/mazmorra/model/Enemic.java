@@ -1,6 +1,6 @@
 package es.uab.TQS.mazmorra.model;
 
-public class Enemic {
+public class Enemic { //Classe amb la logica i variables per als enemics
 
   private int atk;
 

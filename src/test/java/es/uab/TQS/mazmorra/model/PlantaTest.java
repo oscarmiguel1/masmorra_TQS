@@ -157,6 +157,8 @@ public class PlantaTest {
         //Afegim enemic i comprovem
         p.getEnemies().add(enemic1);
         assertTrue(p.isEnemyPosition(5,7));
+        assertFalse(p.isEnemyPosition(3,7));
+        assertFalse(p.isEnemyPosition(5,3));
 
         //Posicio sense enemic
         assertFalse(p.isEnemyPosition(3,3));

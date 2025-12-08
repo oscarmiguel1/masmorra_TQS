@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Joc {
+public class Joc { //Classe principal on s'inicialitza tot el joc i es gestionen les interaccions entre les classes
 
   public enum GameState {
     EXPLORING,
@@ -100,7 +100,7 @@ public class Joc {
     this.itemActual = null;
   }
 
-  public void missatgeTemporal(long duracionMs) {
+  public void missatgeTemporal(long duracionMs) { //estableix la duracio dels missatges d'INFO
     currentState = GameState.INFO;
     infoMsgFi = System.currentTimeMillis() + duracionMs;
   }
@@ -199,7 +199,7 @@ public class Joc {
     return Math.random();
   }
 
-  public void checkInfoMessageDuration() {
+  public void checkInfo() {
     if (currentState == GameState.INFO && System.currentTimeMillis() > infoMsgFi) {
       currentState = GameState.EXPLORING;
       this.itemActual = null;
@@ -212,7 +212,7 @@ public class Joc {
             : GameState.EXPLORING;
   }
 
-  public void boom(){
+  public void boom(){ //elimina els enemics corresponents de manera aleatoria i comprova si queden restants per donar la clau
     ArrayList<Enemic> enemics = this.plantaActual.getEnemies();
 
     if(enemics.isEmpty()) return;
@@ -231,7 +231,7 @@ public class Joc {
 
   }
 
-  public void battle(int x, int y) {
+  public void battle(int x, int y) { //resta al jugador l'atk de l'enemic i comprova si perd la batalla o si guanya. al guanyar, rep diferents items
     Enemic e = this.plantaActual.getEnemy(x, y);
 
     int php = this.player.getHP();
@@ -247,6 +247,7 @@ public class Joc {
       this.player.setEXP(pexp);
       this.plantaActual.enemyDefeated(x, y);
 
+      //Els drops depenen d'un valor aleatori, a excepcio de la clau
       //Drop de pocio
       if (numeroAleatori() < 0.50) {
         if(this.numPlanta > 0){
@@ -265,6 +266,7 @@ public class Joc {
         missatgeTemporal(1000);
       }
 
+
       if (this.plantaActual.getEnemiesLeft() == 0) {
         this.itemActual = new Llave(this.player);
         giveItem(this.itemActual);
@@ -277,7 +279,7 @@ public class Joc {
     this.player.addItem(i);
   }
 
-  public void passarPlanta() {
+  public void passarPlanta() { //avancem de planta, si hi som a l'ultima guanyem
     if (this.numPlanta != 2) {
       this.numPlanta++;
       this.plantaActual = mazmorra[numPlanta];

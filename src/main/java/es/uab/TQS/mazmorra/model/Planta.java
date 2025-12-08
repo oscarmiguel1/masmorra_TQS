@@ -6,9 +6,7 @@ public class Planta {
 
   private final int doorPosX;
   private final int doorPosY;
-
   private boolean doorOpen;
-
   private final String[] floorLayout;
   private final ArrayList<Enemic> enemics;
   private int enemiesLeft;
@@ -28,7 +26,7 @@ public class Planta {
         return e;
       }
     }
-    return null; // No hay enemigo en esa casilla
+    return null; // no hi ha enemic a la casella
   }
 
   public void setEnemiesLeft(int e) {
@@ -59,11 +57,7 @@ public class Planta {
     return this.enemiesLeft;
   }
 
-  public boolean getDoorState() {
-    return this.doorOpen;
-  }
-
-  public boolean isValidPosition(int x, int y) {
+  public boolean isValidPosition(int x, int y) { //comprovem que la posicio es valida per al jugador: es troba dins dels limits i no vol anar a un mur
     int limX = 79;
     int limY = 19;
     return x >= 0 && x <= limX

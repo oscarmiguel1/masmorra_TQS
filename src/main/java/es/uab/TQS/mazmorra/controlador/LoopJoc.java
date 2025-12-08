@@ -11,7 +11,7 @@ import es.uab.TQS.mazmorra.model.Joc;
 import es.uab.TQS.mazmorra.vista.Interface;
 import java.util.Objects;
 
-public class LoopJoc {
+public class LoopJoc { //Clase que gestiona el bucle principal de joc i les accions segons l'estat
 
   private final Joc joc;
   private final Interface hud;
@@ -26,6 +26,7 @@ public class LoopJoc {
     boolean jugando = true;
 
     try {
+      //setejament de Lanterna
       DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
               .setForceAWTOverSwing(false)
               .setTerminalEmulatorTitle("Mazmorra")
@@ -39,7 +40,7 @@ public class LoopJoc {
       TextGraphics tg = screen.newTextGraphics();
       int idx = 0;
 
-      while (jugando) {
+      while (jugando) {  //Inici del bucle principal de joc
         screen.clear();
 
         Joc.GameState currentState = joc.getCurrentState();
@@ -53,7 +54,7 @@ public class LoopJoc {
           }
           case gameOver -> hud.gameOver(screen);
           case GAME_WON -> hud.gameWon(screen);
-          case INFO -> {
+          case INFO -> { //estat que mostra per pantalla els missatges d'ajuda i informació, segons l'item
             hud.dibuixarMazmorra(screen, tg, joc.getPlayer(), joc.getPlantaActual());
             if (joc.getItemActual() == null) {
               hud.ajudaPorta(screen, tg);
@@ -66,7 +67,7 @@ public class LoopJoc {
 
         screen.refresh();
 
-        joc.checkInfoMessageDuration();
+        joc.checkInfo();
 
         KeyStroke key = screen.pollInput();
         if (key != null) {
@@ -101,7 +102,7 @@ public class LoopJoc {
               if (currentState == Joc.GameState.INVENTORY
                       && !joc.getPlayer().getInventari().isEmpty()) {
                 Item item = joc.getPlayer().getInventari().get(idx);
-                if (Objects.equals(item.getNom(), "Clau")) {
+                if (Objects.equals(item.getNom(), "Clau")) { //Si utilitzem una clau correctament, passem de planta i l'eliminem de l'inventari
                   if (joc.getPlantaActual().isDoorPosition(joc.getPlayer().getPos_x(),
                           joc.getPlayer().getPos_y())) {
                     item.usarItem();

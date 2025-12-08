@@ -37,7 +37,7 @@ public class JocTest {
     assertEquals(Joc.GameState.EXPLORING, j.getCurrentState());
     assertEquals(0, j.getNumPlanta());
     assertFalse(j.getGameOver());
-    assertEquals(3, j.getMazmorra()[0].getEnemies().size());
+    assertEquals(5, j.getMazmorra()[0].getEnemies().size());
 
     Joc j2 = new Joc(p);
 
@@ -178,7 +178,6 @@ public class JocTest {
 
     assertInstanceOf(Bomba.class, j7.getItemActual());
 
-
     //Cas normal: jugador guanya i rep bomba i clau
     Jugador p8 = Mockito.mock(Jugador.class);
     Joc j8 = Mockito.spy(new Joc(p8));
@@ -260,7 +259,6 @@ public class JocTest {
     reset(planta);
     reset(e);
 
-
     // Cas normal: queden 2 enemics, elimina 1 o 2
     ArrayList<Enemic> llista2 = new ArrayList<>();
     llista2.add(e);
@@ -275,7 +273,6 @@ public class JocTest {
 
     reset(planta);
     reset(e,e2);
-
 
     // Cas normal: eliminacio de 1 2 o 3 enemics
     ArrayList<Enemic> llista3 = new ArrayList<>();

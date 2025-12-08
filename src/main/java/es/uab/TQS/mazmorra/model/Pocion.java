@@ -1,11 +1,12 @@
 package es.uab.TQS.mazmorra.model;
 
 public class Pocion implements Item {
-  private int cura = 10;
+  private int cura;
 
   private Jugador poseedor;
 
-  public Pocion(Jugador j) {
+  public Pocion(Jugador j,int c) {
+    this.cura = c;
     this.poseedor = j;
   }
 

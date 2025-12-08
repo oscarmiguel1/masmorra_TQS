@@ -10,7 +10,7 @@ public class Main {
 
     Jugador player = new Jugador();
     Joc j = new Joc(player);
-    j.giveItem(new Pocion(player));
+    j.giveItem(new Pocion(player,10));
     Interface hud = new Interface();
     LoopJoc controller = new LoopJoc(j, hud);
 

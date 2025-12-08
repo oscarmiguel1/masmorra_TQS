@@ -117,28 +117,36 @@ public class Joc {
     enemics1.add(e1);
     Enemic e2 = new Enemic(5, 50, 59, 4);
     enemics1.add(e2);
-    Enemic e3 = new Enemic(10, 50, 76, 10);
+    Enemic e3 = new Enemic(3, 50, 76, 10);
     enemics1.add(e3);
+    Enemic e4 = new Enemic(3, 50, 13, 13);
+    enemics1.add(e4);
+    Enemic e5 = new Enemic(8, 50, 46, 11);
+    enemics1.add(e5);
 
     ArrayList<Enemic> enemics2 = new ArrayList<>();
-    Enemic e4 = new Enemic(6, 20, 70, 13);
-    enemics2.add(e4);
-    Enemic e5 = new Enemic(8, 20, 23, 13);
-    enemics2.add(e5);
-    Enemic e6 = new Enemic(10, 20, 21, 3);
+    Enemic e6 = new Enemic(8, 50, 70, 13);
     enemics2.add(e6);
+    Enemic e7 = new Enemic(8, 50, 23, 13);
+    enemics2.add(e7);
+    Enemic e8 = new Enemic(10, 50, 21, 3);
+    enemics2.add(e8);
+    Enemic e9 = new Enemic(10, 50, 46, 3);
+    enemics2.add(e9);
 
     ArrayList<Enemic> enemics3 = new ArrayList<>();
-    Enemic e7 = new Enemic(10, 40, 25, 7);
-    enemics3.add(e7);
-    Enemic e8 = new Enemic(5, 20, 72, 14);
-    enemics3.add(e8);
-    Enemic e9 = new Enemic(8, 20, 3, 19);
-    enemics3.add(e9);
+    Enemic e10 = new Enemic(10, 50, 25, 7);
+    enemics3.add(e10);
+    Enemic e11 = new Enemic(5, 50, 72, 14);
+    enemics3.add(e11);
+    Enemic e12 = new Enemic(8, 50, 3, 19);
+    enemics3.add(e12);
+    Enemic e13 = new Enemic(8, 50, 55, 1);
+    enemics3.add(e13);
 
-    this.mazmorra[0] = new Planta(3, FLOOR1, enemics1, 20, 2);
-    this.mazmorra[1] = new Planta(3, FLOOR2, enemics2, 2, 12);
-    this.mazmorra[2] = new Planta(3, FLOOR3, enemics3, 35, 1);
+    this.mazmorra[0] = new Planta(5, FLOOR1, enemics1, 20, 2);
+    this.mazmorra[1] = new Planta(4, FLOOR2, enemics2, 2, 12);
+    this.mazmorra[2] = new Planta(4, FLOOR3, enemics3, 35, 1);
 
     this.plantaActual = this.mazmorra[0];
     this.player.setInitialPos(38, 19);
@@ -209,8 +217,12 @@ public class Joc {
       this.player.setEXP(pexp);
       this.plantaActual.enemyDefeated(x, y);
 
-      if (Math.random() < 0.4) {
-        this.itemActual = new Pocion(this.player);
+      if (Math.random() < 0.50) {
+        if(this.numPlanta > 0){
+          this.itemActual = new Pocion(this.player,15);
+        }else{
+          this.itemActual = new Pocion(this.player,10);
+        }
         giveItem(itemActual);
         missatgeTemporal(1000);
       }

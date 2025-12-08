@@ -106,6 +106,7 @@ public class Joc {
   }
 
   public void startGame() {
+
     this.mazmorra = new Planta[3];
     this.player.setStatsInicials();
     this.numPlanta = 0;
@@ -150,6 +151,8 @@ public class Joc {
 
     this.plantaActual = this.mazmorra[0];
     this.player.setInitialPos(38, 19);
+    giveItem(new Pocion(player,10));
+    giveItem(new Bomba(player));
   }
 
   public Jugador getPlayer() {
@@ -188,6 +191,14 @@ public class Joc {
     this.numPlanta = x;
   }
 
+  public void setPlantaActual(Planta planta) {
+    this.plantaActual = planta;
+  }
+
+  public double numeroAleatori(){
+    return Math.random();
+  }
+
   public void checkInfoMessageDuration() {
     if (currentState == GameState.INFO && System.currentTimeMillis() > infoMsgFi) {
       currentState = GameState.EXPLORING;
@@ -199,6 +210,25 @@ public class Joc {
     currentState = (currentState == GameState.EXPLORING)
             ? GameState.INVENTORY
             : GameState.EXPLORING;
+  }
+
+  public void boom(){
+    ArrayList<Enemic> enemics = this.plantaActual.getEnemies();
+
+    if(enemics.isEmpty()) return;
+
+    int enemicsAeliminar = Math.min(1 + (int)(Math.random() * 3), enemics.size());
+    for (int i = 0; i < enemicsAeliminar; i++) {
+      int idx = (int)(Math.random() * enemics.size());
+      enemics.remove(idx);
+    }
+    this.plantaActual.setEnemiesLeft(enemics.size());
+    if(this.plantaActual.getEnemiesLeft() == 0){
+      this.itemActual = new Llave(this.player);
+      giveItem(itemActual);
+      missatgeTemporal(1000);
+    }
+
   }
 
   public void battle(int x, int y) {
@@ -217,12 +247,20 @@ public class Joc {
       this.player.setEXP(pexp);
       this.plantaActual.enemyDefeated(x, y);
 
-      if (Math.random() < 0.50) {
+      //Drop de pocio
+      if (numeroAleatori() < 0.50) {
         if(this.numPlanta > 0){
           this.itemActual = new Pocion(this.player,15);
         }else{
           this.itemActual = new Pocion(this.player,10);
         }
+        giveItem(itemActual);
+        missatgeTemporal(1000);
+      }
+
+      //Drop de bomba
+      if(numeroAleatori() < 0.10 ){
+        this.itemActual = new Bomba(this.player);
         giveItem(itemActual);
         missatgeTemporal(1000);
       }

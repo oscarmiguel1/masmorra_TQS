@@ -156,7 +156,6 @@ public class Jugador {
   }
 
   public void setEXP(int e) {
-    // this.exp = e;
     if (e >= this.expNecesaria) {
       this.exp = 0;
       lvUP();
@@ -180,6 +179,7 @@ public class Jugador {
   public void lvUP() {
     this.lv++;
     this.maxHp = this.maxHp + (int) Math.round(this.maxHp * 0.4);
+    this.hpActual = this.hpActual + (int) Math.round(this.maxHp * 0.2);
     this.expNecesaria = this.expNecesaria + (int) Math.round(this.expNecesaria * 0.4);
   }
 

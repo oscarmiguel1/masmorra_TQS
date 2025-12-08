@@ -110,7 +110,13 @@ public class LoopJoc {
                   } else {
                     joc.missatgeTemporal(2000);
                   }
-                } else {
+                }else if(Objects.equals(item.getNom(), "Bomba")){
+                  if(joc.getPlantaActual().getEnemiesLeft() != 0){
+                    item.usarItem();
+                    joc.getPlayer().getInventari().remove(idx);
+                    joc.boom();
+                  }
+                }else {
                   item.usarItem();
                   joc.getPlayer().getInventari().remove(idx);
                 }

@@ -12,7 +12,7 @@ public class PocionTest {
   void testUsarItem(){
     //Cas normal: verifiquem (mitjancant un mock de Jugador) que la salut augmenta
     Jugador p = Mockito.mock(Jugador.class);
-    Item pocion = new Pocion(p);
+    Item pocion = new Pocion(p,10);
     when(p.getHP()).thenReturn(50);
 
     pocion.usarItem();
@@ -21,7 +21,7 @@ public class PocionTest {
 
     //Cas normal: multiples usos
     Jugador p2 = Mockito.mock(Jugador.class);
-    Item pocion2 = new Pocion(p2);
+    Item pocion2 = new Pocion(p2,10);
     when(p2.getHP()).thenReturn(50, 60, 70);
 
     pocion2.usarItem();

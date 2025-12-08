@@ -136,6 +136,20 @@ public class Interface { // clase para dibujar la vista
     tg.putString(startX, startY + 2, "│ Intenta apropar-te.       │");
   }
 
+  public void ajudaBomba(Screen screen, TextGraphics tg){
+    int startX = 59;
+    int startY = 16;
+
+    tg.setBackgroundColor(TextColor.ANSI.BLACK);
+    tg.setForegroundColor(TextColor.ANSI.WHITE);
+    tg.fillRectangle(new TerminalPosition(startX, startY), new TerminalSize(30, 4), ' ');
+
+    tg.putString(startX, startY, "┌────────────────────────────┐");
+    tg.putString(startX, startY + 3, "└────────────────────────────┘");
+    tg.putString(startX, startY + 1, "│ No hi queden              │");
+    tg.putString(startX, startY + 2, "│ enemics!                  │");
+  }
+
   public void mostrarItemTrobat(Screen screen, TextGraphics tg, String nom) {
     int startX = 59;
     int startY = 16;

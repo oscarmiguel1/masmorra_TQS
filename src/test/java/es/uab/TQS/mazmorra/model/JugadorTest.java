@@ -224,6 +224,7 @@ public class JugadorTest {
 
         assertEquals(2, j.getLv());
         assertEquals(28, j.getMax_hp());
+        assertEquals(24,j.getHP());
         assertEquals(140, j.getExp_necesaria());
 
         //Caixa Blanca: redondeig funcio math.round
